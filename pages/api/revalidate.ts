@@ -1,8 +1,6 @@
 import { SIGNATURE_HEADER_NAME, isValidSignature } from '@sanity/webhook';
 
-const handler = async (req: { headers: { [x: string]: { toString: () => any; }; }; body: { id: any; slug: any; }; }, res: {
-  json: any; status: (arg0: number) => { (): any; new(): any; json: { (arg0: { msg?: string; err?: string; }): void; new(): any; }; }; revalidate: (arg0: string) => any; 
-}) => {
+const handler = async (req: { headers: { [x: string]: { toString: () => any; }; }; body: { id: any; slug: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { msg?: string; err?: string; }): void; new(): any; }; }; revalidate: (arg0: string) => any; }) => {
     const secret = process.env.SANITY_WEBHOOK_SECRET
 //authenticating the webhook
   try {
@@ -19,24 +17,15 @@ const handler = async (req: { headers: { [x: string]: { toString: () => any; }; 
 
     //getting payload
     const { id, slug } = req.body;
-    const pathToRevalidate = req.body.slug.current;
-
-    console.log(`===== Revalidating: ${pathToRevalidate}`);
-
     await res.revalidate(`/`);
-   
+    await res.revalidate(`/commercial`);
+    await res.revalidate(`/shows`);
+    await res.revalidate(`/editorial`);
     await res.revalidate(`/${slug}`);
+  
 
     
-
-    await res.revalidate(`/${pathToRevalidate}`);
-
-    await res.revalidate(pathToRevalidate);
-
     res.status(200).json({ msg: 'Product pages revalidated.' });
-    return res.json({ revalidated: true });
-    
-
   } catch (error) {
     res.status(500).json({ err: 'Something went Wrong!' });
   }
