@@ -128,9 +128,10 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
                         src={urlFor(image.asset).url()}
                         width={1800}
                         height={1200}
-                        priority = {
-                          indexSlide === 0 ? true : false
-                        }
+                        priority = {true}
+                        // priority = {
+                        //   indexSlide === 0 ? true : false
+                        // }
                         alt="menu item image"
                       />
                

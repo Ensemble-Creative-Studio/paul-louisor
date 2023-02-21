@@ -16,15 +16,23 @@ export default function HomePage({ header, menu }: { header: any, menu: any }) {
   const shouldAnimate = shouldAnimateSiteTitle();
 
   useEffect(() => {
+    const homeGridColRow = document.querySelector('.homeGridColRow') as HTMLElement;
+    if (homeGridColRow) {
+      homeGridColRow.style.opacity = '1';
+    }
     if (shouldAnimate) {
       animateSiteTitle();
       markSiteTitleAsAnimated();
     }
+    return () => {
+      if (homeGridColRow) {
+        homeGridColRow.style.opacity = '';
+      }
+    };
   }, [shouldAnimate]);
-
   return (
     
-    <div className="homeGridColRow grid h-svh">
+    <div className="homeGridColRow grid h-svh opacity-0">
     <Head>
         <title>Paul Louisor </title>
         <meta property="og:title" content="Paul Louisor" key="title" />
