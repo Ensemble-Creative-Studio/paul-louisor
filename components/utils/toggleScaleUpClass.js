@@ -6,7 +6,7 @@ export function toggleScaleUpClass(element) {
     const hideScrollbar = element.querySelector('.hideScrollBar');
     const text =  element.querySelector('.title ');
     const next = document.querySelector('.nextPage')
-    if (hideScrollbar) {
+    if (hideScrollbar.classList.contains('passive')) {
       hideScrollbar.classList.toggle("scaleUpGallery");
       text.classList.toggle("translatedText");
       next.classList.add('translatedTop')

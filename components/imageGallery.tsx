@@ -2,6 +2,8 @@ import Image from "next/image";
 import urlFor from "@/lib/urlFor";
 import {toggleScaleUpClass} from './utils/toggleScaleUpClass';
 import {drag} from './utils/drag';
+import { useEffect } from 'react';
+
 import Link from "next/link";
 interface Slide {
   images: any;
@@ -33,9 +35,14 @@ interface ImageGalleryProps {
 
 
 const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
-  
-  const handleImageClick = (event: React.MouseEvent<HTMLDivElement>) => {
+
+
+  const Drag = () => {
     drag()
+  };
+
+  const handleImageClick = (event: React.MouseEvent<HTMLDivElement>) => {
+
     const galleryImage = event.currentTarget;
     const galleryImages = document.querySelectorAll('.galleryImage');
 
@@ -47,19 +54,22 @@ const text =  galleryImage.querySelector('.title');
         text?.classList.remove('translatedText')
         galleryImage.classList.remove('translated');
       });
+      const hideScrollbar = galleryImage.querySelector('.hideScrollBar');
       let nextSibling = galleryImage.nextElementSibling;
-      while (nextSibling && nextSibling.classList.contains('galleryImage')) {
-        nextSibling.classList.add('translated');
-        nextSibling = nextSibling.nextElementSibling;
-      }
-    
+      // if(hideScrollbar?.classList.contains('scaleUpGallery')){
+        while (nextSibling && nextSibling.classList.contains('galleryImage')) {
+          nextSibling.classList.add('translated');
+          nextSibling = nextSibling.nextElementSibling;
+        }
+      
+      // }
+
+ 
     
 
     
       toggleScaleUpClass(galleryImage);
-  if (galleryImage.classList.contains('active') ) {
 
-  }
       event.stopPropagation();
     
   };
@@ -67,13 +77,14 @@ const text =  galleryImage.querySelector('.title');
   return (
     <div className="   md:pt-72 grid pt-40">
 
-      {slides.map((slide, index) => {
+      {slides.map((slide, indexSlide) => {
         const matchingSerie = series.find((serie) => serie._id === slide._ref);
         if (matchingSerie) {
           return (
-            <div className="customRowspan galleryImage animatedScale grid  transitionScaleUp z-10 gridAutoRows galleryOrigin" onClick={handleImageClick}  key={index}>
-              <div className="customRowspanSmall transitionScaleUp " key={index}>
-                <div className="md:pb-6 flex cursor-grab flex-nowrap h-full overflow-x-auto gap-2 hideScrollBar pb-4 galleryOrigin transitionScaleUp ">
+            <div className="customRowspan galleryImage animatedScale grid  transitionScaleUp z-10 gridAutoRows galleryOrigin"          onMouseEnter={Drag} onClick={(event) => {  handleImageClick(event);
+            }}  key={indexSlide}>
+              <div className="customRowspanSmall transitionScaleUp " key={indexSlide}>
+                <div className="md:pb-6 flex cursor-grab flex-nowrap h-full overflow-x-auto gap-2 hideScrollBar pb-4 galleryOrigin transitionScaleUp imageContainer passive ">
                   {matchingSerie.images.map((image, index) => {
                     return (
               
@@ -85,6 +96,9 @@ const text =  galleryImage.querySelector('.title');
                         src={urlFor(image.asset).url()}
                         width={1800}
                         height={1200}
+                        priority = {
+                          indexSlide === 0 ? true : false
+                        }
                         alt="menu item image"
                       />
                
@@ -101,7 +115,7 @@ const text =  galleryImage.querySelector('.title');
           );
         } 
         else{
-          <div>yes</div>
+          <div></div>
         }
       })}
 

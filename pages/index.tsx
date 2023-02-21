@@ -17,7 +17,11 @@ export default function HomePage({ header, menu }: { header: any, menu: any }) {
   return (
     
     <div className="homeGridColRow grid h-svh">
-
+    <Head>
+        <title>Paul Louisor </title>
+        <meta property="og:title" content="Paul Louisor" key="title" />
+        <meta property="og:description" content={header.description} key="title" />
+      </Head>
         <HeaderNav  header={header} menu = {menu}/>
         <ImageHeader menu = {menu}/>
         <Contact header={header}/>

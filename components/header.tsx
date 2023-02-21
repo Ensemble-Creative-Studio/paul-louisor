@@ -33,7 +33,7 @@ export default function Header({
       <div className="md:col-start-2 md:col-end-4 ">
       <Link         onMouseEnter={handleMouseEnter} scroll={false} href='/' ref={linkRef}>
         <h1 className="fontSize">Paul Louisor</h1>
-        <h2 className="fontSize  ">Casting Director</h2>
+        <h2 className="fontSize h-full ">Casting Director</h2>
         </Link>
       </div>
       

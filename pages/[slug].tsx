@@ -3,6 +3,7 @@ import { client } from "../lib/sanity.client";
 import HeaderNav from "@/components/headerNav";
 import ImageHeader from "@/components/imageHeader";
 import Contact from "@/components/contact";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import ImageGallery from "@/components/imageGallery";
 import Link from "next/link";
@@ -25,15 +26,16 @@ export default function Page({
   const [matchingSeries, setMatchingSeries] = useState([]);
   const [nextPageUrl, setNextPageUrl] = useState("");
   const [nextPageSlug, setNextPageSlug] = useState("");
-
-  useEffect(() => {
+  const CapitaliseSlug = (slug as string).charAt(0).toUpperCase() + slug.slice(1);
+    useEffect(() => {
     // Find the page that matches the current slug
     const currentPage = menu?.find(
       (page: { slug: { current: any } }) => page.slug.current === slug
     );
     const matchingSlides = slug === '/' ? [] : currentPage?.slides ?? [];
     const matchingSeries = page ?? [];
-    console.log(matchingSeries)
+
+        console.log(matchingSeries)
     const pageIndex = menu?.findIndex((item: any) => item.slug.current === slug);
     const nextPageIndex = (pageIndex + 1) % menu?.length; // wrap around to first page if at last page
     const nextPageSlug = menu[nextPageIndex].slug.current;
@@ -45,7 +47,11 @@ export default function Page({
   }, []);
   return (
     <div className="bg-white galleryContainer overflow-hidden h-screen overflow-y-scroll">
- 
+     <Head>
+        <title>Paul Louisor - {CapitaliseSlug} </title>
+        <meta property="og:title" content="Paul Louisor" key="title" />
+        <meta property="og:description" content={header.description} key="title" />
+      </Head>
       <ImageGallery slides={matchingSlides} series={matchingSeries} />
       <div className="block lastSpacing transitionScaleUp h-0"></div>
       <Link

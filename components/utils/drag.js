@@ -13,8 +13,12 @@ if (document.querySelector(".hideScrollBar")) {
       slider.addEventListener("mousedown", (e) => {
         e.preventDefault();
         isDown = true;
-        slider.classList.add("active");
-        slider.classList.remove('passive')
+
+        setTimeout(() => {
+          slider.classList.add("active");
+          slider.classList.remove('passive')
+        }, 150);
+
         startX = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
         cancelMomentumTracking();
@@ -27,9 +31,12 @@ if (document.querySelector(".hideScrollBar")) {
 
       slider.addEventListener("mouseup", () => {
         isDown = false;
-        slider.classList.remove("active");
-        slider.classList.add("passive");
-        slider.classList
+        setTimeout(() => {
+          slider.classList.remove("active");
+          slider.classList.add("passive");
+        }, 300);
+
+
         beginMomentumTracking();
       });
 
@@ -37,7 +44,7 @@ if (document.querySelector(".hideScrollBar")) {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 1.5; //scroll-fast
+        const walk = (x - startX) * 0.8; //scroll-fast
         var prevScrollLeft = slider.scrollLeft;
         slider.scrollLeft = scrollLeft - walk;
         velX = slider.scrollLeft - prevScrollLeft;

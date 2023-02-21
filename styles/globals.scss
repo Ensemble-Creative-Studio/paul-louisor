@@ -187,9 +187,15 @@ transform: translateY(50vh);
 }
 .home h1, .home h2{
   color: black;
+  background: none;
+-webkit-background-clip: inherit;
+-webkit-text-fill-color: inherit;
 }
 h1,h2{
   color: white;
+  background: white;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
 }
 .home header{
   mix-blend-mode: inherit;
@@ -243,22 +249,7 @@ nav li {
   transform: translateX(0px);
   opacity: 1;
 }
-@media screen and (min-width: 768px) {
-  .desktopOnly {
-    display: none;
-  }
-  .mobileOnly {
-    display: block;
-  }
-  .fontSize {
-    font-size: 1.8rem;
-    line-height: 100%;
-  }
-  .galleryOrigin.scaleUpGallery .title{
-    transform: scale(0.40);
-    
-  }
-}
+
 
 @keyframes my-animation {
   0% {
@@ -279,4 +270,27 @@ nav li {
    /* change the timing function as needed */
     animation-fill-mode: forwards; /* keep the final state after the animation */
   
+}
+.imageContainer.scaleUpGallery img:last-child{
+  padding-right: 40vw;
+}
+@media screen and (min-width: 768px) {
+  .desktopOnly {
+    display: none;
+  }
+  .mobileOnly {
+    display: block;
+  }
+  .imageContainer.scaleUpGallery img:last-child{
+
+    padding-right: 70vw;
+  }
+  .fontSize {
+    font-size: 1.8rem;
+    line-height: 100%;
+  }
+  .galleryOrigin.scaleUpGallery .title{
+    transform: scale(0.40);
+    
+  }
 }
