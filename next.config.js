@@ -1,8 +1,22 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  experimental: {
-    appDir: true,
+module.exports = {
+  images: {
+    dangerouslyAllowSVG: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        port: '',
+        pathname: '/images/**',
+      },
+      
+    ],
   },
-}
+  reactStrictMode: false,
 
-module.exports = nextConfig
+  experimental: {
+    appDir: true 
+  },
+
+  
+};
