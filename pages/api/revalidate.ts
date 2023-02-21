@@ -19,22 +19,24 @@ const handler = async (req: { headers: { [x: string]: { toString: () => any; }; 
 
     //getting payload
     const { id, slug } = req.body;
+    const pathToRevalidate = req.body.slug.current;
+
+    console.log(`===== Revalidating: ${pathToRevalidate}`);
+
     await res.revalidate(`/`);
    
     await res.revalidate(`/${slug}`);
 
-    const pathToRevalidate = req.body.slug.current;
-
-    console.log(`===== Revalidating: ${pathToRevalidate}`);
     
+
     await res.revalidate(`/${pathToRevalidate}`);
 
     await res.revalidate(pathToRevalidate);
 
-
+    res.status(200).json({ msg: 'Product pages revalidated.' });
     return res.json({ revalidated: true });
     
-    res.status(200).json({ msg: 'Product pages revalidated.' });
+
   } catch (error) {
     res.status(500).json({ err: 'Something went Wrong!' });
   }

@@ -18,8 +18,16 @@ export function revealSkew(element) {
   
     // Create a function that adds the animReveal class to the galleryImage element
     function revealGalleryImage(el) {
-      el.classList.add('animReveal');
-    }
+        if (!el.hasAttribute('data-revealed')) {
+          el.classList.add('animReveal', 'opacity-0', 'opacity-1');
+          el.setAttribute('data-revealed', 'true');
+      
+          setTimeout(() => {
+            el.classList.remove('animReveal', 'opacity-0');
+          }, 1300);
+        }
+      }
+      
   
     // Create a function that handles the scroll event and reveals the galleryImage elements
     function handleScroll() {
