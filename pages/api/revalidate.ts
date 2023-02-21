@@ -21,6 +21,14 @@ const handler = async (req: { headers: { [x: string]: { toString: () => any; }; 
    
     await res.revalidate(`/${slug}`);
 
+    const pathToRevalidate = req.body.slug.current;
+
+
+    console.log(`===== Revalidating: ${pathToRevalidate}`);
+
+
+    await res.revalidate(pathToRevalidate);
+
 
     
     res.status(200).json({ msg: 'Product pages revalidated.' });
