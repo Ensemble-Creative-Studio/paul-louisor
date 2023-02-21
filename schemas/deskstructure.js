@@ -4,11 +4,11 @@ export const deskStructure = (S, context) =>
   S.list()
     .title("Content")
     .items([
-      orderableDocumentListDeskItem({type: 'pages', S, context}),
+
       ...S.documentTypeListItems()
-      .filter((listItem) => !["siteSettings"].includes(listItem.getId()))
+      .filter((listItem) => !["siteSettings", 'order'].includes(listItem.getId()))
       .filter((template) => {
-        if (template.spec.id === "media.tag") {
+        if (template.spec.id === "media.tag"  ) {
           return false;
         }
         return true;
