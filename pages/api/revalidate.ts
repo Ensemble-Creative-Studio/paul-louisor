@@ -1,6 +1,8 @@
 import { SIGNATURE_HEADER_NAME, isValidSignature } from '@sanity/webhook';
 
-const handler = async (req: { headers: { [x: string]: { toString: () => any; }; }; body: { id: any; slug: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { msg?: string; err?: string; }): void; new(): any; }; }; revalidate: (arg0: string) => any; }) => {
+const handler = async (req: { headers: { [x: string]: { toString: () => any; }; }; body: { id: any; slug: any; }; }, res: {
+  json: any; status: (arg0: number) => { (): any; new(): any; json: { (arg0: { msg?: string; err?: string; }): void; new(): any; }; }; revalidate: (arg0: string) => any; 
+}) => {
     const secret = process.env.SANITY_WEBHOOK_SECRET
 //authenticating the webhook
   try {
@@ -25,11 +27,12 @@ const handler = async (req: { headers: { [x: string]: { toString: () => any; }; 
 
 
     console.log(`===== Revalidating: ${pathToRevalidate}`);
-
+    await res.revalidate(`/${pathToRevalidate}`);
 
     await res.revalidate(pathToRevalidate);
 
 
+    return res.json({ revalidated: true });
     
     res.status(200).json({ msg: 'Product pages revalidated.' });
   } catch (error) {

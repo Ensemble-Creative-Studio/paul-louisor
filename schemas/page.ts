@@ -7,7 +7,7 @@ export default {
     type: 'document',
     orderings: [orderRankOrdering],
     fields: [
-      
+
       {
         name: 'pageName',
         title: 'Page Name',
@@ -49,7 +49,8 @@ export default {
             ]
           }
         ]
-      }
+      },
+      orderRankField({ type: "document" }),
     ]
   }
   
