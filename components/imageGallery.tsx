@@ -41,38 +41,70 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
     drag()
   };
 
+  let timeoutId: NodeJS.Timeout | undefined  = undefined ;
+  let shouldExecuteCode = true;
+  
   const handleImageClick = (event: React.MouseEvent<HTMLDivElement>) => {
-
     const galleryImage = event.currentTarget;
     const galleryImages = document.querySelectorAll('.galleryImage');
-
-
-    galleryImages.forEach((galleryImage) => {
-      const hideScrollbar = galleryImage.querySelector('.hideScrollBar');
-const text =  galleryImage.querySelector('.title');
-        hideScrollbar?.classList.remove('scaleUpGallery');
-        text?.classList.remove('translatedText')
-        galleryImage.classList.remove('translated');
-      });
-      const hideScrollbar = galleryImage.querySelector('.hideScrollBar');
-      let nextSibling = galleryImage.nextElementSibling;
-      // if(hideScrollbar?.classList.contains('scaleUpGallery')){
+  
+    // Set the flag to true to indicate that the code should execute
+    shouldExecuteCode = true;
+  
+    // Set a timeout of 300ms
+    timeoutId = setTimeout(() => {
+      // Check if the flag is still true before executing the code
+      if (shouldExecuteCode) {
+        galleryImages.forEach((galleryImage) => {
+          const hideScrollbar = galleryImage.querySelector('.hideScrollBar');
+          const text =  galleryImage.querySelector('.title');
+          hideScrollbar?.classList.remove('scaleUpGallery');
+          text?.classList.remove('translatedText')
+          galleryImage.classList.remove('translated');
+        });
+  
+        const hideScrollbar = galleryImage.querySelector('.hideScrollBar');
+        console.log(hideScrollbar)
+        let nextSibling = galleryImage.nextElementSibling;
         while (nextSibling && nextSibling.classList.contains('galleryImage')) {
           nextSibling.classList.add('translated');
           nextSibling = nextSibling.nextElementSibling;
         }
-      
-      // }
-
- 
-    
-
-    
-      toggleScaleUpClass(galleryImage);
-
-      event.stopPropagation();
-    
+  
+        toggleScaleUpClass(galleryImage);
+  
+        event.stopPropagation();
+      }
+    }, 100);
+  
+    // Add event listeners to detect when the mouse is released or moved
+    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mousemove', handleMouseMove);
+  
+    event.preventDefault();
   };
+  
+  const handleMouseUp = () => {
+    // Clear the timeout and remove the event listeners
+    clearTimeout(timeoutId);
+    document.removeEventListener('mouseup', handleMouseUp);
+    document.removeEventListener('mousemove', handleMouseMove);
+  
+    // Set the flag to false to indicate that the code should not execute
+    shouldExecuteCode = false;
+  };
+  
+  const handleMouseMove = () => {
+    // If the mouse moves, clear the timeout and remove the event listeners
+    clearTimeout(timeoutId);
+    document.removeEventListener('mouseup', handleMouseUp);
+    document.removeEventListener('mousemove', handleMouseMove);
+  
+    // Set the flag to false to indicate that the code should not execute
+    shouldExecuteCode = false;
+  };
+  
+  
 
   return (
     <div className="   md:pt-72 grid pt-40">

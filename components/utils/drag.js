@@ -17,7 +17,7 @@ if (document.querySelector(".hideScrollBar")) {
         setTimeout(() => {
           slider.classList.add("active");
           slider.classList.remove('passive')
-        }, 150);
+        }, 0);
 
         startX = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
@@ -33,10 +33,10 @@ if (document.querySelector(".hideScrollBar")) {
         isDown = false;
         setTimeout(() => {
           slider.classList.remove("active");
-          slider.classList.add("passive");
-        }, 300);
+        slider.classList.add("passive");
+        }, );
 
-
+   
         beginMomentumTracking();
       });
 
