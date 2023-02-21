@@ -25,8 +25,8 @@ const handler = async (req: { headers: { [x: string]: { toString: () => any; }; 
 
     const pathToRevalidate = req.body.slug.current;
 
-
     console.log(`===== Revalidating: ${pathToRevalidate}`);
+    
     await res.revalidate(`/${pathToRevalidate}`);
 
     await res.revalidate(pathToRevalidate);

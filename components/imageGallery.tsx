@@ -2,6 +2,7 @@ import Image from "next/image";
 import urlFor from "@/lib/urlFor";
 import {toggleScaleUpClass} from './utils/toggleScaleUpClass';
 import {drag} from './utils/drag';
+import {revealSkew} from './utils/revealSkew';
 import { useEffect } from 'react';
 
 import Link from "next/link";
@@ -36,7 +37,9 @@ interface ImageGalleryProps {
 
 const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
 
-
+  useEffect(() => {
+    revealSkew();
+  }, );
   const Drag = () => {
     drag()
   };
@@ -113,8 +116,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
         const matchingSerie = series.find((serie) => serie._id === slide._ref);
         if (matchingSerie) {
           return (
-            <div className="customRowspan galleryImage animatedScale grid  transitionScaleUp z-10 gridAutoRows galleryOrigin"          onMouseEnter={Drag} onClick={(event) => {  handleImageClick(event);
-            }}  key={indexSlide}>
+<div className={`customRowspan galleryImage animatedScale relative grid transitionScaleUp z-10 gridAutoRows galleryOrigin ${indexSlide > 1 ? 'opacity-0' : ''}`} onMouseEnter={Drag} onClick={event => { handleImageClick(event) }} key={indexSlide}>
               <div className="customRowspanSmall transitionScaleUp " key={indexSlide}>
                 <div className="md:pb-6 flex cursor-grab flex-nowrap h-full overflow-x-auto gap-2 hideScrollBar pb-4 galleryOrigin transitionScaleUp imageContainer passive ">
                   {matchingSerie.images.map((image, index) => {
@@ -128,10 +130,9 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
                         src={urlFor(image.asset).url()}
                         width={1800}
                         height={1200}
-                        priority = {true}
-                        // priority = {
-                        //   indexSlide === 0 ? true : false
-                        // }
+                        priority = {
+                          indexSlide === 0 || indexSlide === 1 ? true : false
+                        }
                         alt="menu item image"
                       />
                

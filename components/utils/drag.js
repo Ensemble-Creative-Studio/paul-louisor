@@ -4,7 +4,7 @@ if (document.querySelector(".hideScrollBar")) {
 
     sliders.forEach((slider, index) => {
 
-      console.log(slider);
+    
 
       let isDown = false;
       let startX;

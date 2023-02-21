@@ -28,6 +28,7 @@ export default function Page({
   const [nextPageSlug, setNextPageSlug] = useState("");
   const CapitaliseSlug = (slug as string).charAt(0).toUpperCase() + slug.slice(1);
     useEffect(() => {
+      
     // Find the page that matches the current slug
     const currentPage = menu?.find(
       (page: { slug: { current: any } }) => page.slug.current === slug
