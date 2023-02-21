@@ -21,7 +21,7 @@ export default function ImageHeader({ menu }: { menu: any }) {
     });
   return (
     <div className=" imageHeaderCol self-end transitionEasingContact">
-      <div className=" md:hidden flex">
+      <div className=" md:hidden flex gallery-header-mobile">
         {mobileImageUrls.map((url: any, index: Key | null | undefined) => (
           <div key={index}>
             <Image

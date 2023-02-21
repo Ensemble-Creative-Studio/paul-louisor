@@ -28,7 +28,7 @@ export default function HeaderNav({ header, menu }: { header: any; menu: any }) 
 
    
         <nav className="md:pt-6 md:w-screen fontSize    z-20 md:grid md:grid-cols-12 md:gap-4 md:px-4  block pt-60  pl-8">
-          <ul className="col-start-4  ">
+          <ul className="col-start-4 menuTitle galleryOrigin relative">
             {menu.map((item: any, index: any) => (
               <li className="" key={index}>
                 <Link scroll={false} href={item.pageName.toLowerCase()}>{item.pageName}</Link>{" "}
@@ -36,7 +36,7 @@ export default function HeaderNav({ header, menu }: { header: any; menu: any }) 
             ))}
            
           </ul>
-          <div  className=" contactButton  list-none col-start-6  ">
+          <div  className=" contactButton galleryOrigin  list-none col-start-6 relative ">
           <li
               className="  list-none "
               onClick={handleContactClick}

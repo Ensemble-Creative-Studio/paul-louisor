@@ -7,12 +7,20 @@ import Contact from "@/components/contact";
 import Header from "@/components/header";
 import { useEffect } from "react";
 import Head from "next/head";
+import {animateSiteTitle, shouldAnimateSiteTitle, markSiteTitleAsAnimated  } from '../components/utils/intro'
 interface PageProps {
 
 }
 
 export default function HomePage({ header, menu }: { header: any, menu: any }) {
+  const shouldAnimate = shouldAnimateSiteTitle();
 
+  useEffect(() => {
+    if (shouldAnimate) {
+      animateSiteTitle();
+      markSiteTitleAsAnimated();
+    }
+  }, [shouldAnimate]);
 
   return (
     
@@ -20,7 +28,7 @@ export default function HomePage({ header, menu }: { header: any, menu: any }) {
     <Head>
         <title>Paul Louisor </title>
         <meta property="og:title" content="Paul Louisor" key="title" />
-        <meta property="og:description" content={header.description} key="title" />
+        {/* <meta property="og:description" content={header.description} key="title" /> */}
       </Head>
         <HeaderNav  header={header} menu = {menu}/>
         <ImageHeader menu = {menu}/>
