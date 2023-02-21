@@ -50,7 +50,7 @@ export default {
           }
         ]
       },
-      orderRankField({ type: "document" }),
+      orderRankField({ type: "pages" }),
     ]
   }
   

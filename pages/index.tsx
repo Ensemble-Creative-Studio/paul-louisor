@@ -33,7 +33,7 @@ export default function HomePage({ header, menu }: { header: any, menu: any }) {
 export async function getStaticProps() {
   const query = groq`*[_type == 'siteSettings' ] `;
   const data = await client.fetch(query);
-  const queryMenu = groq`*[_type == 'pages' ]|order(orderRank) `;
+  const queryMenu = groq`*[_type == 'pages' ] |order(orderRank) `;
   const dataMenu = await client.fetch(queryMenu);
   if (data && data.length > 0) {
     return {

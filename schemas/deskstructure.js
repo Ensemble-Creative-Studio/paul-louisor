@@ -1,9 +1,10 @@
 import { CiSettings } from 'react-icons/ci'
-export const deskStructure = (S) =>
+import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list';
+export const deskStructure = (S, context) =>
   S.list()
     .title("Content")
     .items([
-      
+      // orderableDocumentListDeskItem({type: 'pages', S, context}),
       ...S.documentTypeListItems()
       .filter((listItem) => !["siteSettings"].includes(listItem.getId()))
       .filter((template) => {
