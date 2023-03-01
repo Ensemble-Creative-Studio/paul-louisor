@@ -14,7 +14,9 @@ export default function HeaderNav({ header, menu }: { header: any; menu: any }) 
   }, []);
   const router = useRouter();
   const handleContactClick = () => {
-    handleHeaderToggle();
+    if (window.innerWidth < 765) {
+      handleHeaderToggle();
+    }
   };
   const handleContactHover = () => {
     const contactInfoElements = document.querySelectorAll('.contactInfo');

@@ -5,7 +5,7 @@ const Transition = ({ children }: any) => {
   
     let variants = {};
     if (asPath === '/') {
- 
+ console.log('aspath')
         variants = {
           out: {
             y: '-100vh', 
@@ -28,8 +28,9 @@ const Transition = ({ children }: any) => {
           },
         };
       } else {
+        console.log('notaspath')
+
         variants = {
-          
             out: {
               
                 y: '100vh', 
