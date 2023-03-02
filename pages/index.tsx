@@ -32,7 +32,7 @@ export default function HomePage({ header, menu }: { header: any, menu: any }) {
   }, [shouldAnimate]);
   return (
     
-    <div className="homeGridColRow grid h-svh opacity-0">
+    <div className="homeGridColRow grid h-svh opacity-0 ">
     <Head>
         <title>Paul Louisor </title>
         <meta property="og:title" content="Paul Louisor" key="title" />

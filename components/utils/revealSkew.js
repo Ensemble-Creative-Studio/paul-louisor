@@ -49,5 +49,13 @@ export function revealSkew(element) {
   }
 
   // Add a scroll event listener to the container that calls the handleScroll function
-  bgWhite.addEventListener("scroll", handleScroll);
+
+const body = document.querySelector('body');
+
+setTimeout(() => {
+  if (!body.classList.contains('home')) {
+    bgWhite.addEventListener('scroll', handleScroll);
+  }
+}, 500);
+
 }
