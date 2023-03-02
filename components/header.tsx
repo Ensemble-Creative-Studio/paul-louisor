@@ -46,7 +46,7 @@ export default function Header({
         
 
     <header
-      className={`z-20 md:DesktopPaddingleft md:grid-cols-12 md:gap-4 md:px-4 opacity-0  headerMobileCol   fixed top-0 left-0 transitionEasing flex flex-col pl-8 pt-6 h-24 customOrigin ${headerClassName}`}
+      className={`z-20 md:DesktopPaddingleft md:grid-cols-12 md:gap-4 md:px-4 opacity-0  headerMobileCol   fixed top-0 left-0  flex flex-col pl-8 pt-6 h-24 customOrigin ${headerClassName}`}
     >
       <div className="md:col-start-2 md:col-end-4 siteTitle galleryOrigin siteHome ">
       <Link         onMouseEnter={handleMouseEnter} scroll={false} href='/' ref={linkRef}>

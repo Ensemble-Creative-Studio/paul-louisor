@@ -14,9 +14,9 @@ const imageHeaderColMobile = document.querySelector('.gallery-header-mobile');
       opacity: 0
     }, {
       opacity :1,
-      duration: 0.2,
-      delay: 0.3,
-      ease:'Power4.easeInOut',
+      duration: 0.1,
+      delay: 0.1,
+
     });
   gsap.fromTo(siteTitle, {
     scale: 3
