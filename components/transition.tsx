@@ -18,24 +18,46 @@ const Transition = ({ children }: any) => {
   // Listen to route change events
   useEffect(() => {
     const handleRouteChange = (url: SetStateAction<string>, { shallow }: any) => {
+      const nextPage = document.querySelector('.nextPage') as HTMLElement;
+      const siteHome =  document.querySelector('.siteHome') as HTMLElement;
+      nextPage.addEventListener('click', () => {
+        setInitialY('100vh');
+        setInitialY2('-100vh');
+        // setTimeout(() => {
+        //   setInitialY('-100vh');
+        //   setInitialY2('100vh');
+        // }, 1500);
+      });
+      siteHome.addEventListener('mouseenter', () => {
+        setInitialY('-100vh');
+        setInitialY2('100vh');
+        // setTimeout(() => {
+        //   setInitialY('-100vh');
+        //   setInitialY2('100vh');
+        // }, 1500);
+      });
+      console.log(nextPage)
       if (prevPageUrl === '/' && url !== '/') {
         setInitialY('-100vh');
         setInitialY2('100vh');
-        setTimeout(() => {
-          setInitialY2('-100vh');
-          setInitialY('100vh');
-        }, 500);
+
+        
         console.log('Transitioning from home page to another page');
       } else if (prevPageUrl !== '/' && url === '/') {
         setInitialY('100vh');
         setInitialY2('-100vh');
+        // setTimeout(() => {
+        //   setInitialY('-100vh');
+        //   setInitialY2('100vh');
+
+        // }, 500);
         console.log('Transitioning from another page to home page');
       }
        else if (prevPageUrl !== '/' && url !== '/') {
         setInitialY('-100vh');
         setInitialY2('100vh');
         setTimeout(() => {
-       
+          setInitialY2('-100vh');
           setInitialY('100vh');
         }, 500);
         console.log('Transitioning from another page to another page');
