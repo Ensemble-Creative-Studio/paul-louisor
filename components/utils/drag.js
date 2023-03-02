@@ -17,7 +17,7 @@ if (document.querySelector(".hideScrollBar")) {
         setTimeout(() => {
           slider.classList.add("active");
           slider.classList.remove('passive')
-        }, 130);
+        }, 100);
 
         startX = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
