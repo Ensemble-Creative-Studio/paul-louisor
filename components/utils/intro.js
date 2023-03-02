@@ -10,6 +10,14 @@ const imageHeaderCol = document.querySelector('.gallery-header');
 const imageHeaderColMobile = document.querySelector('.gallery-header-mobile');
   // Create the animation
   if (window.innerWidth > 798) {
+    gsap.fromTo(siteTitle, {
+      opacity: 0
+    }, {
+      opacity :1,
+      duration: 0.2,
+      delay: 0,
+      ease:'Power4.easeInOut',
+    });
   gsap.fromTo(siteTitle, {
     scale: 3
   }, {
