@@ -1,12 +1,16 @@
 export function revealSkew(element) {
   // Get all the galleryImage elements
-  const galleryImages = document.querySelectorAll(".galleryImage");
+  const galleryImages = document.querySelectorAll(".galleryImage.new");
+
   galleryImages.forEach((el, index) => {
     // Only add the animReveal class for the third element and onwards
+    setTimeout(() => {
+      el.classList.remove('new')
+    }, 2000);
 
   });
 
-  const bgWhite = document.querySelector(".galleryContainer");
+  const bgWhite = document.querySelector(".galleryContainer.new");
 
   // Create a function that checks if an element is in view within an offset
   function isElementInView(el, offset) {
@@ -29,6 +33,7 @@ export function revealSkew(element) {
 
   // Create a function that handles the scroll event and reveals the galleryImage elements
   function handleScroll() {
+    console.log('scroll')
     // Loop through the galleryImage elements
     galleryImages.forEach((el, index) => {
       // Only add the animReveal class for the third element and onwards

@@ -27,8 +27,16 @@ export default function Page({
   const [nextPageUrl, setNextPageUrl] = useState("");
   const [nextPageSlug, setNextPageSlug] = useState("");
   const CapitaliseSlug = (slug as string).charAt(0).toUpperCase() + slug.slice(1);
+
+
     useEffect(() => {
-      
+      const bgWhite2 = document.querySelector(".galleryContainer.new") as HTMLElement;
+
+      // Only add the animReveal class for the third element and onwards
+      setTimeout(() => {
+        bgWhite2.classList.remove('new')
+      }, 2000);
+  
     // Find the page that matches the current slug
     const currentPage = menu?.find(
       (page: { slug: { current: any } }) => page.slug.current === slug
@@ -47,7 +55,7 @@ export default function Page({
     setNextPageSlug(nextPageSlug);
   }, []);
   return (
-    <div className="bg-white galleryContainer overflow-hidden h-screen overflow-y-scroll">
+    <div className="bg-white galleryContainer new overflow-hidden h-screen overflow-y-scroll">
      <Head>
         <title>Paul Louisor - {CapitaliseSlug} </title>
         <meta property="og:title" content="Paul Louisor" key="title" />

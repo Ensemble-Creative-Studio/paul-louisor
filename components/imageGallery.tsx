@@ -39,7 +39,8 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
   useEffect(() => {
     revealSkew();
     // AOS.init();
-    const galleryImages2 = document.querySelectorAll(".galleryImage");
+    
+    const galleryImages2 = document.querySelectorAll(".galleryImage.new");
 
     galleryImages2.forEach((el, index) => {
       // Only add the animReveal class for the third element and onwards
@@ -50,7 +51,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
       }
     });
   
-  });
+  } );
   const Drag = () => {
     drag();
   };
@@ -96,7 +97,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
         if (matchingSerie) {
           return (
             <div
-              className={`customRowspan galleryImage animatedScale relative grid transitionScaleUp z-10 ${
+              className={`customRowspan galleryImage new animatedScale relative grid transitionScaleUp z-10 ${
                 clickedIndex === indexSlide && isMaxRow ? "max-row" : "min-row"
               } galleryOrigin`}
               onMouseEnter={Drag}
