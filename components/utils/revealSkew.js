@@ -12,6 +12,7 @@ export function revealSkew(element) {
 
   const bgWhite = document.querySelector(".galleryContainer.new");
 
+
   // Create a function that checks if an element is in view within an offset
   function isElementInView(el, offset) {
     const bounding = el.getBoundingClientRect();
@@ -40,7 +41,7 @@ export function revealSkew(element) {
       if (index >= 2) {
         
         // Check if the element is in view within an offset
-        if (isElementInView(el, 0.01)) {
+        if (isElementInView(el, 0.5)) {
           revealGalleryImage(el);
         }
       }
