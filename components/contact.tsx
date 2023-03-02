@@ -40,7 +40,7 @@ export default function Contact({ header }: { header: any }) {
           })}
         {(!header || header.length === 0) && <p>No contact information available.</p>}
         </div>
-  <div className="pt-8 ">
+  <div className="pt-8 opacity-50">
   {header &&
           header.SiteBy.map((item: any) => {
             if (item._type === "block") {

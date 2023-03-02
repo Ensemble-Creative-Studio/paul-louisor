@@ -79,7 +79,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
           ".galleryContainer"
         ) as HTMLElement;
         if (event.target.nextElementSibling) {
-          const top = bgWhite.scrollTop + rect.top - window.innerHeight * 0.11;
+          const top = bgWhite.scrollTop + rect.top - window.innerHeight * 0.105;
           bgWhite.scrollTo({
             top,
             behavior: "smooth",

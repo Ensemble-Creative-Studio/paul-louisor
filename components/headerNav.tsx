@@ -94,7 +94,7 @@ export default function HeaderNav({ header, menu }: { header: any; menu: any }) 
                 .map((mark: any) => mark.href);
   
               return (
-                <div key={item._key}>
+                <div className="opacity-50" key={item._key}>
                   {links.length > 0 ? (
                     <a
                       key={links[0]}
