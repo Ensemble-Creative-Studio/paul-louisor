@@ -84,6 +84,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
           bgWhite.scrollTo({
             top,
             behavior: "smooth",
+            
           });
         }
       }, 500);
