@@ -20,13 +20,18 @@ const Transition = ({ children }: any) => {
     const handleRouteChange = (url: SetStateAction<string>, { shallow }: any) => {
       const nextPage = document.querySelector('.nextPage') as HTMLElement;
       const siteHome =  document.querySelector('.siteHome') as HTMLElement;
+      const allNav = document.querySelectorAll('nav a') as any;
+      allNav.forEach((navItem: any) => {
+        navItem.addEventListener('click', () => {
+          console.log('coucou')
+          setInitialY('100vh');
+          setInitialY2('-100vh');
+        });
+      });
       nextPage.addEventListener('click', () => {
         setInitialY('100vh');
         setInitialY2('-100vh');
-        // setTimeout(() => {
-        //   setInitialY('-100vh');
-        //   setInitialY2('100vh');
-        // }, 1500);
+
       });
       siteHome.addEventListener('mouseenter', () => {
         setInitialY('-100vh');
@@ -37,14 +42,13 @@ const Transition = ({ children }: any) => {
         // }, 1500);
       });
       siteHome.addEventListener('click', () => {
+        console.log('cli')
         setInitialY('-100vh');
         setInitialY2('100vh');
-        // setTimeout(() => {
-        //   setInitialY('-100vh');
-        //   setInitialY2('100vh');
-        // }, 1500);
+
       });
       console.log(nextPage)
+
       if (prevPageUrl === '/' && url !== '/') {
         setInitialY('-100vh');
         setInitialY2('100vh');
@@ -54,11 +58,7 @@ const Transition = ({ children }: any) => {
       } else if (prevPageUrl !== '/' && url === '/') {
         setInitialY('100vh');
         setInitialY2('-100vh');
-        // setTimeout(() => {
-        //   setInitialY('-100vh');
-        //   setInitialY2('100vh');
-
-        // }, 500);
+    
         console.log('Transitioning from another page to home page');
       }
        else if (prevPageUrl !== '/' && url !== '/') {
@@ -85,7 +85,7 @@ const Transition = ({ children }: any) => {
   }, [router, prevPageUrl]);
 
 
-  console.log(initialY)
+
     let variants = {};
     if (router.asPath === '/') {
 

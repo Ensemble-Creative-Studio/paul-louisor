@@ -56,7 +56,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
 
         const images = imageContainer.querySelectorAll('img');
         images.forEach((image) => {
-          console.log(image)
+  
           image.addEventListener('click', () => {
             console.log(`Clicked on image with index ${index}`);
           });
