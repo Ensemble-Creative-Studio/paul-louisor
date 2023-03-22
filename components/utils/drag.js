@@ -33,7 +33,7 @@ if (document.querySelector(".hideScrollBar")) {
         isDown = false;
    
         setTimeout(() => {
-          console.log('mouseupp')
+
           slider.classList.remove("active");
         slider.classList.add("passive");
         }, 150 );

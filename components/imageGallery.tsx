@@ -41,17 +41,45 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
     AOS.init();
  
     const bgWhite = document.querySelector('.galleryContainer.new') as HTMLElement;
-    console.log(bgWhite)
+
     const handleScroll = () => {
       AOS.refresh();
 
     };
 
     bgWhite.addEventListener('scroll', handleScroll);
-  
-    return () => {
-      bgWhite.removeEventListener('scroll', handleScroll);
-    };
+
+    setTimeout(() => {
+      const galleryImages = document.querySelectorAll('.galleryImage');
+
+      galleryImages.forEach((imageContainer, index) => {
+
+        const images = imageContainer.querySelectorAll('img');
+        images.forEach((image) => {
+          console.log(image)
+          image.addEventListener('click', () => {
+            console.log(`Clicked on image with index ${index}`);
+          });
+        });
+      });
+      return () => {
+        bgWhite.removeEventListener('scroll', handleScroll);
+        galleryImages.forEach((imageContainer, index) => {
+          const images = imageContainer.querySelectorAll('img');
+          images.forEach((image) => {
+            image.removeEventListener('click', () => {
+              console.log(`Clicked on image with index ${index}`);
+            });
+          });
+        });
+      };
+    }, 500);
+
+
+
+
+
+    
   }, []);
   
   const Drag = () => {
@@ -125,6 +153,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
                         height={1800}
                         quality={85}
                      priority= {false}
+                     
                         alt="gallery image"
                       />
                     );

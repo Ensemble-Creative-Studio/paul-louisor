@@ -36,7 +36,7 @@ export default function Header({
   }, [shouldAnimate]);
 
   const handleMouseEnter = () => {
-    console.log('hover')
+
     if (router.pathname !== "/") {
       linkRef.current?.click();
     }

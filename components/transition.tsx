@@ -36,6 +36,14 @@ const Transition = ({ children }: any) => {
         //   setInitialY2('100vh');
         // }, 1500);
       });
+      siteHome.addEventListener('click', () => {
+        setInitialY('-100vh');
+        setInitialY2('100vh');
+        // setTimeout(() => {
+        //   setInitialY('-100vh');
+        //   setInitialY2('100vh');
+        // }, 1500);
+      });
       console.log(nextPage)
       if (prevPageUrl === '/' && url !== '/') {
         setInitialY('-100vh');
