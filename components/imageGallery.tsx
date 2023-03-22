@@ -122,8 +122,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
                         width={1200}
                         height={1800}
                         quality={85}
-                        // loading="lazy"
-                        priority = {true}
+                        loading="eager"
                         alt="gallery image"
                       />
                     );
