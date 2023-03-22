@@ -36,22 +36,24 @@ interface ImageGalleryProps {
 }
 
 const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
-  useEffect(() => {
-    revealSkew();
-    // AOS.init();
-    
-    const galleryImages2 = document.querySelectorAll(".galleryImage.new");
 
-    galleryImages2.forEach((el, index) => {
-      // Only add the animReveal class for the third element and onwards
-      if (index >= 2) {
-        el.classList.add("cool", "top-24");
-        // Check if the element is in view within an offset
-    
-      }
-    });
+  useEffect(() => {
+    AOS.init();
+ 
+    const bgWhite = document.querySelector('.galleryContainer.new') as HTMLElement;
+    console.log(bgWhite)
+    const handleScroll = () => {
+      AOS.refresh();
+
+    };
+
+    bgWhite.addEventListener('scroll', handleScroll);
   
-  } );
+    return () => {
+      bgWhite.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  
   const Drag = () => {
     drag();
   };
@@ -97,8 +99,8 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
         const matchingSerie = series.find((serie) => serie._id === slide._ref);
         if (matchingSerie) {
           return (
-            <div
-              className={`customRowspan galleryImage new animatedScale relative grid transitionScaleUp z-10 ${
+            <div  
+              className={`customRowspan  galleryImage new animatedScale relative grid transitionScaleUp z-10 ${
                 clickedIndex === indexSlide && isMaxRow ? "max-row" : "min-row"
               } galleryOrigin`}
               onMouseEnter={Drag}
@@ -106,7 +108,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
               key={indexSlide}
             >
               {" "}
-              <div
+              <div data-aos="scaleY"   data-aos-id="super-duper"  data-aos-once="true"
                 className="customRowspanSmall transitionScaleUp "
                 key={indexSlide}
               >
