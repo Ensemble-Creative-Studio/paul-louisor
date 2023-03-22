@@ -21,6 +21,7 @@ const Transition = ({ children }: any) => {
       const nextPage = document.querySelector('.nextPage') as HTMLElement;
       const siteHome =  document.querySelector('.siteHome') as HTMLElement;
       const allNav = document.querySelectorAll('nav a') as any;
+      console.log(allNav)
       allNav.forEach((navItem: any) => {
         navItem.addEventListener('click', () => {
           console.log('coucou')
@@ -49,18 +50,18 @@ const Transition = ({ children }: any) => {
       });
       console.log(nextPage)
 
-      if (prevPageUrl === '/' && url !== '/') {
-        setInitialY('-100vh');
-        setInitialY2('100vh');
+      // if (prevPageUrl === '/' && url !== '/') {
+      //   setInitialY('-100vh');
+      //   setInitialY2('100vh');
 
         
-        console.log('Transitioning from home page to another page');
-      } else if (prevPageUrl !== '/' && url === '/') {
-        setInitialY('100vh');
-        setInitialY2('-100vh');
+      //   console.log('Transitioning from home page to another page');
+      // } else if (prevPageUrl !== '/' && url === '/') {
+      //   setInitialY('100vh');
+      //   setInitialY2('-100vh');
     
-        console.log('Transitioning from another page to home page');
-      }
+      //   console.log('Transitioning from another page to home page');
+      // }
       //  else if (prevPageUrl !== '/' && url !== '/') {
       //   setInitialY('-100vh');
       //   setInitialY2('100vh');
