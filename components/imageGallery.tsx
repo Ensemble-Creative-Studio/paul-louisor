@@ -87,7 +87,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
             
           });
         }
-      }, 500);
+      }, 700);
     }
   };
 

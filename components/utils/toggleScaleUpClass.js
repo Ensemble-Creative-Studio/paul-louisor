@@ -39,7 +39,7 @@ export function toggleScaleUpClass(element) {
           top,
           behavior: 'smooth',
           easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
-          duration: 500,
+          duration: 800,
         });
       } else {
         const top =
@@ -50,9 +50,9 @@ export function toggleScaleUpClass(element) {
           top,
           behavior: 'smooth',
           easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
-          duration: 500,
+          duration: 800,
         });
       }
-    }, 600);
+    }, 1000);
   }
 }
