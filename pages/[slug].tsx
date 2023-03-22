@@ -44,7 +44,6 @@ export default function Page({
     const matchingSlides = slug === '/' ? [] : currentPage?.slides ?? [];
     const matchingSeries = page ?? [];
 
-        console.log(matchingSeries)
     const pageIndex = menu?.findIndex((item: any) => item.slug.current === slug);
     const nextPageIndex = (pageIndex + 1) % menu?.length; // wrap around to first page if at last page
     const nextPageSlug = menu[nextPageIndex].slug.current;

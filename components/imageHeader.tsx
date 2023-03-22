@@ -29,6 +29,7 @@ export default function ImageHeader({ menu }: { menu: any }) {
               src={url}
               width={1200}
               height={800}
+
               alt="menu item image"
             />
           </div>
@@ -44,6 +45,7 @@ export default function ImageHeader({ menu }: { menu: any }) {
                 src={item.url}
                 width={1800}
                 height={1200}
+                loading="eager"
                 alt="menu item desktop image"
               />
             </Link>
