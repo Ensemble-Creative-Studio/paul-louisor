@@ -8,6 +8,9 @@ import { useRouter } from "next/router";
 import ImageGallery from "@/components/imageGallery";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import urlFor from "@/lib/urlFor";
+
+import { getPlaiceholder } from "plaiceholder";
 interface PageProps {}
 
 export default function Page({
@@ -74,6 +77,7 @@ export default function Page({
   );
 }
 
+
 export const getStaticProps = async (context: { params: { slug: any } }) => {
   const { slug } = context.params;
   const query = groq`*[_type == 'siteSettings' ] `;
@@ -83,17 +87,51 @@ export const getStaticProps = async (context: { params: { slug: any } }) => {
   const queryPage = groq`*[_type == 'series']`;
   const dataPage = await client.fetch(queryPage);
 
+  const dataPageWithPlaceholders = await Promise.all(
+    dataPage.map(async (pageData: { images: any; }) => {
+      const imagesWithBlurData = [];
+      for (const image of pageData.images) {
+        let imageUrl;
+        try {
+          imageUrl = urlFor(image.asset).url();
+        } catch (err) {
+          console.error('Error: Unable to resolve image URL from source:', image.asset);
+        }
+        if (imageUrl) {
+          const { base64, img } = await getPlaiceholder(imageUrl,    { size: 10 });
+          imagesWithBlurData.push({
+            ...image,
+            img: {
+              ...img,
+              blurDataURL: base64,
+            },
+          });
+        } else {
+          imagesWithBlurData.push(image);
+        }
+      }
+      return {
+        ...pageData,
+        images: imagesWithBlurData,
+      };
+    })
+  );
+  
+  
+  
+
   if (data && data.length > 0) {
     return {
       props: {
         header: data[0],
         menu: dataMenu,
-        page: dataPage,
+        page: dataPageWithPlaceholders,
       },
     };
   }
   return { props: { header: null, dataMenu: null } };
 };
+
 export async function getStaticPaths() {
   const query = groq`*[_type == 'pages'  ]`;
   const data = await client.fetch(query);

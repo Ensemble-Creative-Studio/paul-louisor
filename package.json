@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@next/font": "13.1.6",
+    "@plaiceholder/next": "^2.5.0",
     "@portabletext/react": "^2.0.0",
     "@sanity/image-url": "^1.0.1",
     "@sanity/orderable-document-list": "^1.0.2",
@@ -29,6 +30,7 @@
     "next-compose-plugins": "^2.2.1",
     "next-lqip-images": "^0.1.0",
     "next-sanity": "^4.0.6",
+    "plaiceholder": "^2.5.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",

@@ -22,6 +22,8 @@ interface Serie {
   _id: string;
   title: string;
   images: {
+    img: any;
+    base64: string | undefined;
     asset: any;
     ImageMobile: {
       asset: {
@@ -213,20 +215,23 @@ $(".galleryImage").on("mouseup", "img", function (event) {
               >
                 <div className="md:pb-6 flex cursor-grab flex-nowrap h-full overflow-x-auto gap-2 hideScrollBar pb-4 galleryOrigin transitionScaleUp imageContainer passive ">
                   {matchingSerie.images.map((image, index) => {
+               console.log(image)
                     return (
                       <Image
-                        key={index}
-                        className={`flex-shrink-0 w-auto h-full  ${
-                          index === 0 ? "md:DesktopPaddingleft pl-8" : ""
-                        }`}
-                        src={urlFor(image.asset).url()}
-                        width={1200}
-                        height={1800}
-                        quality={85}
-                        priority={index <= 2}
-                        draggable={false}
-                        alt="gallery image"
-                      />
+                      key={index}
+                      className={`flex-shrink-0 w-auto h-full ${
+                        index === 0 ? "md:DesktopPaddingleft pl-8" : ""
+                      }`}
+                      src={urlFor(image.asset).url()} 
+                       width={1200}
+                      height={1800}
+                      quality={85}
+                      priority={index <= 2}
+                      draggable={false}
+                      blurDataURL={image.img.blurDataURL} // Use the base64 URL from the matchingSeries objects
+                      placeholder="blur"
+                      alt="gallery image"
+                    />
                     );
                   })}
                 </div>
