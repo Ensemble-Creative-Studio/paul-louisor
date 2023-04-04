@@ -6,7 +6,7 @@ import { revealSkew } from "./utils/revealSkew";
 import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import AOS from "aos";
-
+import $ from "jquery";
 
 import Link from "next/link";
 interface Slide {
@@ -37,52 +37,119 @@ interface ImageGalleryProps {
 }
 
 const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
-
   useEffect(() => {
     AOS.init();
- 
-    const bgWhite = document.querySelector('.galleryContainer.new') as HTMLElement;
+
+    const bgWhite = document.querySelector(
+      ".galleryContainer.new"
+    ) as HTMLElement;
 
     const handleScroll = () => {
       AOS.refresh();
-
     };
 
-    bgWhite.addEventListener('scroll', handleScroll);
+    bgWhite.addEventListener("scroll", handleScroll);
 
     setTimeout(() => {
-      const galleryImages = document.querySelectorAll('.galleryImage');
+      const galleryImages = document.querySelectorAll(".imageContainer");
+      let dragging = false;
 
-      galleryImages.forEach((imageContainer, index) => {
+$(".galleryImage").on("mousedown", "img", function () {
+    dragging = false;
+});
 
-        const images = imageContainer.querySelectorAll('img');
-        images.forEach((image) => {
-  
-          image.addEventListener('click', () => {
-            console.log(`Clicked on image with index ${index}`);
-          });
-        });
-      });
+$(".galleryImage").on("mousemove", "img", function () {
+    dragging = true;
+});
+
+$(".galleryImage").on("mouseup", "img", function (event) {
+    if (!dragging) { // Only run the code if the user is not dragging the container
+      const container = $(this).parent(".imageContainer");
+      const galleryImage = container.parents(".galleryImage");
+      
+      // Remove max-row class from other gallery images
+      
+      // $(".galleryImage.max-row").not(galleryImage).removeClass("max-row");
+      
+      const isMaxRow = galleryImage.hasClass("max-row");
+      if (isMaxRow){
+        setTimeout(() => {
+          galleryImage.toggleClass("max-row");
+        }, 600);
+        setTimeout(() => {
+          const imagePos = $(this).position();
+          if (!container) {
+              return; // exit the function if container is undefined
+          }
+          const containerPos = container[0].offsetLeft;
+          const imageLeft = isMaxRow ? 0 : imagePos.left - containerPos + container[0].scrollLeft;
+          container.animate(
+              {
+                  scrollLeft: imageLeft,
+              },
+              "slow"
+          );
+
+
+            // const rect = event.target.getBoundingClientRect();
+            // const bgWhite = document.querySelector(".galleryContainer") as HTMLElement;
+            // if (event.target.nextElementSibling) {
+            //     const top = bgWhite.scrollTop + rect.top - window.innerHeight * 0.105;
+            //     bgWhite.scrollTo({
+            //         top,
+            //         behavior: "smooth",
+            //     });
+            // }
+        }, 0);
+      }
+      else{
+        galleryImage.toggleClass("max-row");
+        setTimeout(() => {
+          const imagePos = $(this).position();
+          if (!container) {
+              return; // exit the function if container is undefined
+          }
+          const containerPos = container[0].offsetLeft;
+          const imageLeft = isMaxRow ? 0 : imagePos.left - containerPos + container[0].scrollLeft;
+          container.animate(
+              {
+                  scrollLeft: imageLeft,
+              },
+              "slow"
+          );
+
+
+            const rect = event.target.getBoundingClientRect();
+            const bgWhite = document.querySelector(".galleryContainer") as HTMLElement;
+            if (event.target.nextElementSibling) {
+                const top = bgWhite.scrollTop + rect.top - window.innerHeight * 0.105;
+                bgWhite.scrollTo({
+                    top,
+                    behavior: "smooth",
+                });
+            }
+        }, 600);
+      }
+
+
+
+    }
+});
+
       return () => {
-        bgWhite.removeEventListener('scroll', handleScroll);
-        galleryImages.forEach((imageContainer, index) => {
-          const images = imageContainer.querySelectorAll('img');
-          images.forEach((image) => {
-            image.removeEventListener('click', () => {
+        bgWhite.removeEventListener("scroll", handleScroll);
+        galleryImages.forEach((imageContainer) => {
+          const images = imageContainer.querySelectorAll("img");
+          images.forEach((image, index) => {
+            image.removeEventListener("click", () => {
               console.log(`Clicked on image with index ${index}`);
             });
           });
         });
       };
     }, 500);
-
-
-
-
-
-    
   }, []);
-  
+
   const Drag = () => {
     drag();
   };
@@ -91,35 +158,35 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
   const [clickedIndex, setClickedIndex] = useState(-1);
 
   const handleMaxRowToggle = (event: any, index: any) => {
-    // Check if clicked element has class 'passive'
-    let drag = false;
+    // console.log('ckk')
+    // // Check if clicked element has class 'passive'
+    // let drag = false;
 
-    document.addEventListener("mousedown", () => (drag = false));
-    document.addEventListener("mouseup", () => (drag = true));
-    document.addEventListener("mousemove", () => (drag = true));
+    // document.addEventListener("mousedown", () => (drag = false));
+    // document.addEventListener("mouseup", () => (drag = true));
+    // document.addEventListener("mousemove", () => (drag = true));
 
-    if (event.target.classList.contains("passive")) {
-      if (clickedIndex === index && drag === false) {
-        setIsMaxRow(!isMaxRow);
-      } else {
-        setClickedIndex(index);
-        setIsMaxRow(true);
-      }
-      setTimeout(() => {
-        const rect = event.target.getBoundingClientRect();
-        const bgWhite = document.querySelector(
-          ".galleryContainer"
-        ) as HTMLElement;
-        if (event.target.nextElementSibling) {
-          const top = bgWhite.scrollTop + rect.top - window.innerHeight * 0.105;
-          bgWhite.scrollTo({
-            top,
-            behavior: "smooth",
-            
-          });
-        }
-      }, 700);
-    }
+    // if (event.target.classList.contains("passive")) {
+    //   if (clickedIndex === index && drag === false) {
+    //     setIsMaxRow(!isMaxRow);
+    //   } else {
+    //     setClickedIndex(index);
+    //     setIsMaxRow(true);
+    //   }
+    //   setTimeout(() => {
+    //     const rect = event.target.getBoundingClientRect();
+    //     const bgWhite = document.querySelector(
+    //       ".galleryContainer"
+    //     ) as HTMLElement;
+    //     if (event.target.nextElementSibling) {
+    //       const top = bgWhite.scrollTop + rect.top - window.innerHeight * 0.105;
+    //       bgWhite.scrollTo({
+    //         top,
+    //         behavior: "smooth",
+    //       });
+    //     }
+    //   }, 700);
+    // }
   };
 
   return (
@@ -128,7 +195,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
         const matchingSerie = series.find((serie) => serie._id === slide._ref);
         if (matchingSerie) {
           return (
-            <div  
+            <div
               className={`customRowspan  galleryImage new animatedScale relative grid transitionScaleUp z-10 ${
                 clickedIndex === indexSlide && isMaxRow ? "max-row" : "min-row"
               } galleryOrigin`}
@@ -137,7 +204,10 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
               key={indexSlide}
             >
               {" "}
-              <div data-aos="scaleY"   data-aos-id="super-duper"  data-aos-once="true"
+              <div
+                data-aos="scaleY"
+                data-aos-id="super-duper"
+                data-aos-once="true"
                 className="customRowspanSmall transitionScaleUp "
                 key={indexSlide}
               >
@@ -146,15 +216,15 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
                     return (
                       <Image
                         key={index}
-                        className={`flex-shrink-0 w-auto h-full pointer-events-none ${
+                        className={`flex-shrink-0 w-auto h-full  ${
                           index === 0 ? "md:DesktopPaddingleft pl-8" : ""
                         }`}
                         src={urlFor(image.asset).url()}
                         width={1200}
                         height={1800}
                         quality={85}
-                     priority
-                     
+                        priority
+                        draggable={false}
                         alt="gallery image"
                       />
                     );
