@@ -89,27 +89,33 @@ export const getStaticProps = async (context: { params: { slug: any } }) => {
 
   const dataPageWithPlaceholders = await Promise.all(
     dataPage.map(async (pageData: { images: any; }) => {
-      const imagesWithBlurData = [];
-      for (const image of pageData.images) {
+      const imagesWithBlurDataPromises = pageData.images.map(async (image) => {
         let imageUrl;
-        try {
-          imageUrl = urlFor(image.asset).url();
-        } catch (err) {
-          console.error('Error: Unable to resolve image URL from source:', image.asset);
+        if (image.asset) {
+          try {
+            imageUrl = urlFor(image.asset).url();
+          } catch (err) {
+            console.error('Error: Unable to resolve image URL from source:', image.asset);
+          }
+        } else {
+          console.warn('Warning: image.asset is undefined');
         }
         if (imageUrl) {
-          const { base64, img } = await getPlaiceholder(imageUrl,    { size: 10 });
-          imagesWithBlurData.push({
+          const { base64, img } = await getPlaiceholder(imageUrl, { size: 10 });
+          return {
             ...image,
             img: {
               ...img,
               blurDataURL: base64,
             },
-          });
+          };
         } else {
-          imagesWithBlurData.push(image);
+          return image;
         }
-      }
+      });
+  
+      const imagesWithBlurData = await Promise.all(imagesWithBlurDataPromises);
+  
       return {
         ...pageData,
         images: imagesWithBlurData,
