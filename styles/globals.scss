@@ -11,8 +11,15 @@ html {
   font-size: 62.5%;
   background-color: #fff;
   scroll-behavior: smooth;
+  
+  transform-style: preserve-3d;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+*{
+  // transform-style: preserve-3d;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
 }
 body {
   font-family: "TheFutur", Arial, sans-serif;

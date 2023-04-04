@@ -223,7 +223,7 @@ $(".galleryImage").on("mouseup", "img", function (event) {
                         width={1200}
                         height={1800}
                         quality={85}
-                        priority={index <= 2}
+                        priority={indexSlide <= 2}
                         draggable={false}
                         alt="gallery image"
                       />
