@@ -19,5 +19,5 @@ module.exports =  withPlaiceholder({
     appDir: true 
   },
 
-  
+  staticPageGenerationTimeout: 1000,
 });

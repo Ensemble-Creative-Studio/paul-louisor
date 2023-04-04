@@ -215,7 +215,7 @@ $(".galleryImage").on("mouseup", "img", function (event) {
               >
                 <div className="md:pb-6 flex cursor-grab flex-nowrap h-full overflow-x-auto gap-2 hideScrollBar pb-4 galleryOrigin transitionScaleUp imageContainer passive ">
                   {matchingSerie.images.map((image, index) => {
-               console.log(image)
+      
                     return (
                       <Image
                       key={index}

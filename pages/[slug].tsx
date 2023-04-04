@@ -89,39 +89,52 @@ export const getStaticProps = async (context: { params: { slug: any } }) => {
 
   const dataPageWithPlaceholders = await Promise.all(
     dataPage.map(async (pageData: { images: any; }) => {
-      const imagesWithBlurDataPromises = pageData.images.map(async (image) => {
+      const imagesWithBlurDataPromises = pageData.images.map(async (image: { asset: any; }) => {
         let imageUrl;
         if (image.asset) {
           try {
             imageUrl = urlFor(image.asset).url();
           } catch (err) {
             console.error('Error: Unable to resolve image URL from source:', image.asset);
+            return Promise.reject(err);
           }
         } else {
           console.warn('Warning: image.asset is undefined');
+          return Promise.resolve(image);
         }
+  
         if (imageUrl) {
-          const { base64, img } = await getPlaiceholder(imageUrl, { size: 10 });
-          return {
-            ...image,
-            img: {
-              ...img,
-              blurDataURL: base64,
-            },
-          };
+          try {
+            const { base64, img } = await getPlaiceholder(imageUrl, { size: 10 });
+            return {
+              ...image,
+              img: {
+                ...img,
+                blurDataURL: base64,
+              },
+            };
+          } catch (err) {
+            console.error('Error: Unable to generate placeholder:', imageUrl);
+            return Promise.reject(err);
+          }
         } else {
-          return image;
+          return Promise.resolve(image);
         }
       });
   
-      const imagesWithBlurData = await Promise.all(imagesWithBlurDataPromises);
-  
-      return {
-        ...pageData,
-        images: imagesWithBlurData,
-      };
+      try {
+        const imagesWithBlurData = await Promise.all(imagesWithBlurDataPromises);
+        return {
+          ...pageData,
+          images: imagesWithBlurData,
+        };
+      } catch (err) {
+        console.error('Error: Unable to process images:', err);
+        return Promise.reject(err);
+      }
     })
   );
+  
   
   
   
