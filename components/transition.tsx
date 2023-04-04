@@ -51,27 +51,27 @@ const Transition = ({ children }: any) => {
       });
       console.log(nextPage)
 
-      // if (prevPageUrl === '/' && url !== '/') {
-      //   setInitialY('-100vh');
-      //   setInitialY2('100vh');
+      if (prevPageUrl === '/' && url !== '/') {
+        setInitialY('-100vh');
+        setInitialY2('100vh');
 
         
-      //   console.log('Transitioning from home page to another page');
-      // } else if (prevPageUrl !== '/' && url === '/') {
-      //   setInitialY('100vh');
-      //   setInitialY2('-100vh');
+        console.log('Transitioning from home page to another page');
+      } else if (prevPageUrl !== '/' && url === '/') {
+        setInitialY('100vh');
+        setInitialY2('-100vh');
     
-      //   console.log('Transitioning from another page to home page');
-      // }
-      //  else if (prevPageUrl !== '/' && url !== '/') {
-      //   setInitialY('-100vh');
-      //   setInitialY2('100vh');
-      //   setTimeout(() => {
-      //     setInitialY2('-100vh');
-      //     setInitialY('100vh');
-      //   }, 500);
-      //   console.log('Transitioning from another page to another page');
-      // }
+        console.log('Transitioning from another page to home page');
+      }
+       else if (prevPageUrl !== '/' && url !== '/') {
+        setInitialY('-100vh');
+        setInitialY2('100vh');
+        setTimeout(() => {
+          setInitialY2('-100vh');
+          setInitialY('100vh');
+        }, 500);
+        console.log('Transitioning from another page to another page');
+      }
 
       // Update previous page URL
       if (!shallow) {

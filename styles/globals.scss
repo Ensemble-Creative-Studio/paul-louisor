@@ -191,9 +191,9 @@ body {
 .home h1,
 .home h2 {
   color: black;
-  background: none;
-  -webkit-background-clip: inherit;
-  -webkit-text-fill-color: inherit;
+  background: black;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 h1,
 h2 {

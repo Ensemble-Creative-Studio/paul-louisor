@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint"
   },
+
   "dependencies": {
     "@next/font": "13.1.6",
     "@portabletext/react": "^2.0.0",

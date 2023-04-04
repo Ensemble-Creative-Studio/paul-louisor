@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import AOS from "aos";
 
+
 import Link from "next/link";
 interface Slide {
   images: any;
@@ -152,7 +153,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
                         width={1200}
                         height={1800}
                         quality={85}
-                     priority= {false}
+                     priority
                      
                         alt="gallery image"
                       />

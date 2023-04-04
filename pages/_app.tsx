@@ -29,8 +29,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Transition>
       <Component {...pageProps} />
       </Transition>
-   
-
     </div>
   );
 }
