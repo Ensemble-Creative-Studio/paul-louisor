@@ -12,14 +12,15 @@ html {
   background-color: #fff;
   scroll-behavior: smooth;
   
-  transform-style: preserve-3d;
+  transform-style: flat;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 *{
-  // transform-style: preserve-3d;
-  // -webkit-font-smoothing: antialiased;
-  // -moz-osx-font-smoothing: grayscale;
+  transform-style: flat;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
 }
 body {
   font-family: "TheFutur", Arial, sans-serif;
