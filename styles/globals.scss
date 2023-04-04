@@ -205,10 +205,14 @@ h2 {
 }
 .home header {
   mix-blend-mode: inherit;
+  -webkit-backface-visibility: hidden;
+backface-visibility: hidden;
 }
 
 header {
   mix-blend-mode: difference;
+  -webkit-backface-visibility: hidden;
+backface-visibility: hidden;
 }
 
 .hideScrollBar::-webkit-scrollbar {

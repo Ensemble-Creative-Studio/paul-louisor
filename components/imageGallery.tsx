@@ -142,7 +142,7 @@ $(".galleryImage").on("mouseup", "img", function (event) {
           const images = imageContainer.querySelectorAll("img");
           images.forEach((image, index) => {
             image.removeEventListener("click", () => {
-              console.log(`Clicked on image with index ${index}`);
+
             });
           });
         });
