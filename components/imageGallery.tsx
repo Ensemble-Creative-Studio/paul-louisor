@@ -40,8 +40,11 @@ interface ImageGalleryProps {
 }
 
 const ImageGallery = ({ slides, series, seriesOnly }: ImageGalleryProps) => {
-
+  const [isImageVisible, setIsImageVisible] = useState(false);
   useEffect(() => {
+    setTimeout(() => {
+      setIsImageVisible(true);
+    }, 3000);
     AOS.init();
 
     const bgWhite = document.querySelector(
@@ -223,23 +226,28 @@ $(".galleryImage").on("mouseup", "img", function (event) {
       // console.log(image)
              
  
-                    return (
-                      <Image
-                      key={index}
-                      className={`flex-shrink-0 w-auto h-full ${
-                        index === 0 ? "md:DesktopPaddingleft pl-8" : ""
-                      }`}
-                      src={image.img.src} 
-                       width={1200}
-                      height={1800}
-                      quality={85}
-                      priority={indexSlide < 2}
-                      draggable={false}
-                      blurDataURL={indexSlide > 2 ? image.img.blurDataURL : undefined} // Use the base64 URL from the matchingSeries objects only if indexSlide > 2
-                      placeholder={indexSlide > 2 ? "blur" : undefined}
-                      alt="gallery image"
-                    />
-                    );
+      if (isImageVisible) {
+        return (
+          <Image
+            key={index}
+            className={`flex-shrink-0 w-auto h-full ${
+              index === 0 ? "md:DesktopPaddingleft pl-8" : ""
+            }`}
+            src={image.img.src} 
+            width={1200}
+            height={1800}
+            quality={85}
+            priority={indexSlide < 2}
+            draggable={false}
+            blurDataURL={indexSlide > 2 ? image.img.blurDataURL : undefined} // Use the base64 URL from the matchingSeries objects only if indexSlide > 2
+            placeholder={indexSlide > 2 ? "blur" : undefined}
+            alt="gallery image"
+          />
+        );
+      } else {
+        return null;
+      }
+      
                   })}
                 </div>
                 <div className="md:flex md:pl-0 md:DesktopPaddingleft pl-8 title transitionScaleUp titleOrigin">
