@@ -3,7 +3,7 @@ import urlFor from "@/lib/urlFor";
 import { toggleScaleUpClass } from "./utils/toggleScaleUpClass";
 import { drag } from "./utils/drag";
 import { revealSkew } from "./utils/revealSkew";
-import { useEffect, useState } from "react";
+import { Key, useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import $ from "jquery";
@@ -36,9 +36,11 @@ interface Serie {
 interface ImageGalleryProps {
   slides: Slide[];
   series: Serie[];
+  seriesOnly: any
 }
 
-const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
+const ImageGallery = ({ slides, series, seriesOnly }: ImageGalleryProps) => {
+
   useEffect(() => {
     AOS.init();
 
@@ -195,6 +197,8 @@ $(".galleryImage").on("mouseup", "img", function (event) {
     <div className="   md:pt-72 grid pt-40 ">
       {slides.map((slide, indexSlide) => {
         const matchingSerie = series.find((serie) => serie._id === slide._ref);
+        console.log(matchingSerie)
+        console.log(seriesOnly[indexSlide])
         if (matchingSerie) {
           return (
             <div
@@ -214,15 +218,19 @@ $(".galleryImage").on("mouseup", "img", function (event) {
                 key={indexSlide}
               >
                 <div className="md:pb-6 flex cursor-grab flex-nowrap h-full overflow-x-auto gap-2 hideScrollBar pb-4 galleryOrigin transitionScaleUp imageContainer passive ">
-                  {matchingSerie.images.map((image, index) => {
-      
+                  {seriesOnly[indexSlide].images.map((image: {
+                    img: any; asset: any; 
+}, index: number) => {
+      // console.log(image)
+             
+ 
                     return (
                       <Image
                       key={index}
                       className={`flex-shrink-0 w-auto h-full ${
                         index === 0 ? "md:DesktopPaddingleft pl-8" : ""
                       }`}
-                      src={urlFor(image.asset).url()} 
+                      src={image.img.src} 
                        width={1200}
                       height={1800}
                       quality={85}
