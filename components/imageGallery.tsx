@@ -234,10 +234,10 @@ $(".galleryImage").on("mouseup", "img", function (event) {
                        width={1200}
                       height={1800}
                       quality={85}
-                      priority={index <= 2}
+                      priority={indexSlide < 2}
                       draggable={false}
-                      blurDataURL={image.img.blurDataURL} // Use the base64 URL from the matchingSeries objects
-                      placeholder="blur"
+                      blurDataURL={indexSlide > 2 ? image.img.blurDataURL : undefined} // Use the base64 URL from the matchingSeries objects only if indexSlide > 2
+                      placeholder={indexSlide > 2 ? "blur" : undefined}
                       alt="gallery image"
                     />
                     );
