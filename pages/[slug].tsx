@@ -89,7 +89,6 @@ async function getSlideData(slides: any) {
     const imagePromises = slideData[0].images.map(async (image: { asset: any; }) => {
       const imageUrl = urlFor(image.asset).url();
       const { base64, img } = await getPlaiceholder(imageUrl,  { size: 4 });
-
       return {
         img: {
           ...img,
