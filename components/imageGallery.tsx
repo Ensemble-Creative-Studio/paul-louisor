@@ -44,7 +44,7 @@ const ImageGallery = ({ slides, series, seriesOnly }: ImageGalleryProps) => {
   useEffect(() => {
     setTimeout(() => {
       setIsImageVisible(true);
-    }, 1500);
+    }, 1000);
     AOS.init();
 
     const bgWhite = document.querySelector(
@@ -231,7 +231,7 @@ $(".galleryImage").on("mouseup", "img", function (event) {
           <Image
             key={index}
             className={`flex-shrink-0 w-auto h-full ${
-              index === 0 ? "md:DesktopPaddingleft pl-8" : ""
+              index === 0 ? "md:DesktopMarginleft ml-8" : ""
             }`}
             src={image.img.src} 
             width={1200}
@@ -239,8 +239,8 @@ $(".galleryImage").on("mouseup", "img", function (event) {
             quality={85}
             priority={indexSlide < 2}
             draggable={false}
-            blurDataURL={indexSlide > 2 ? image.img.blurDataURL : undefined} // Use the base64 URL from the matchingSeries objects only if indexSlide > 2
-            placeholder={indexSlide > 2 ? "blur" : undefined}
+            blurDataURL={indexSlide > 1 ? image.img.blurDataURL : undefined} // Use the base64 URL from the matchingSeries objects only if indexSlide > 2
+            placeholder={indexSlide > 1 ? "blur" : undefined}
             alt="gallery image"
           />
         );
