@@ -44,7 +44,7 @@ const ImageGallery = ({ slides, series, seriesOnly }: ImageGalleryProps) => {
   useEffect(() => {
     setTimeout(() => {
       setIsImageVisible(true);
-    }, 3000);
+    }, 1500);
     AOS.init();
 
     const bgWhite = document.querySelector(
@@ -226,7 +226,7 @@ $(".galleryImage").on("mouseup", "img", function (event) {
       // console.log(image)
              
  
-      if (isImageVisible) {
+      if (isImageVisible || indexSlide < 2) {
         return (
           <Image
             key={index}
