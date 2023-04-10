@@ -80,34 +80,34 @@ export default function Page({
   );
 }
 async function getSlideData(slides: any) {
-  let updatedSlides = [];
+  const updatedSlides = [];
 
-  const slidePromises = slides.map(async (slide: { _ref: any; }) => {
+  // Loop through each slide and fetch its data using _ref
+  for (let slide of slides) {
     const querySlide = groq`*[_id == '${slide._ref}']`;
     const slideData = await client.fetch(querySlide);
 
-    const imagePromises = slideData[0].images.map(async (image: { asset: any; }) => {
+    // Update the images array of the slide with blur placeholders
+    const updatedImages = [];
+    for (const image of slideData[0].images) {
       const imageUrl = urlFor(image.asset).url();
       const { base64, img } = await getPlaiceholder(imageUrl,  { size: 4 });
-      return {
+
+      updatedImages.push({
+     
         img: {
           ...img,
           blurDataURL: base64,
         },
-      };
-    });
-
-    const updatedImages = await Promise.all(imagePromises);
+      });
+    }
     slideData[0].images = updatedImages;
 
-    return slideData[0];
-  });
-
-  updatedSlides = await Promise.all(slidePromises);
+    updatedSlides.push(slideData[0]);
+  }
 
   return updatedSlides;
 }
-
 
 export const getStaticProps = async (context: { params: { slug: any } }) => {
   const { slug } = context.params;
