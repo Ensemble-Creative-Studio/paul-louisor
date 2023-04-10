@@ -56,7 +56,7 @@ export default function Page({
     const nextPageUrl = `/${nextPageSlug}`;
     setMatchingSlides(matchingSlides);
     setMatchingSeries(matchingSeries);
-    console.log(matchingSlides)
+
     setNextPageUrl(nextPageUrl);
     setNextPageSlug(nextPageSlug);
   }, []);
@@ -80,34 +80,35 @@ export default function Page({
   );
 }
 async function getSlideData(slides: any) {
-  const updatedSlides = [];
+  let updatedSlides = [];
 
-  // Loop through each slide and fetch its data using _ref
-  for (let slide of slides) {
+  const slidePromises = slides.map(async slide => {
     const querySlide = groq`*[_id == '${slide._ref}']`;
     const slideData = await client.fetch(querySlide);
 
-    // Update the images array of the slide with blur placeholders
-    const updatedImages = [];
-    for (const image of slideData[0].images) {
+    const imagePromises = slideData[0].images.map(async image => {
       const imageUrl = urlFor(image.asset).url();
-      const { base64, img } = await getPlaiceholder(imageUrl,  { size: 10 });
+      const { base64, img } = await getPlaiceholder(imageUrl,  { size: 4 });
 
-      updatedImages.push({
-        ...image,
+      return {
         img: {
           ...img,
           blurDataURL: base64,
         },
-      });
-    }
+      };
+    });
+
+    const updatedImages = await Promise.all(imagePromises);
     slideData[0].images = updatedImages;
 
-    updatedSlides.push(slideData[0]);
-  }
+    return slideData[0];
+  });
+
+  updatedSlides = await Promise.all(slidePromises);
 
   return updatedSlides;
 }
+
 
 export const getStaticProps = async (context: { params: { slug: any } }) => {
   const { slug } = context.params;
@@ -116,16 +117,16 @@ export const getStaticProps = async (context: { params: { slug: any } }) => {
   const data = await client.fetch(query);
   const queryMenu = groq`*[_type == 'pages']|order(orderRank) `;
   const dataMenu = await client.fetch(queryMenu);
-  console.log(slug);
+
   const thispageSeries =  groq`*[_type == 'pages' && slug.current ==  "${slug}" ] `;
   const datathispageSeries = await client.fetch(thispageSeries);
   const queryPage = groq`*[_type == 'series' ]`;
   const dataPage = await client.fetch(queryPage);
-  console.log('this page serie is : ');
+
 
   const updatedSlides = await getSlideData(datathispageSeries[0].slides);
   const seriesOnly = updatedSlides;
-console.log(seriesOnly)
+
   if (data && data.length > 0) {
     return {
       props: {
