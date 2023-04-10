@@ -91,7 +91,7 @@ async function getSlideData(slides: any) {
     const updatedImages = [];
     for (const image of slideData[0].images) {
       const imageUrl = urlFor(image.asset).url();
-      const { base64, img } = await getPlaiceholder(imageUrl,  { size: 4 });
+      const { base64, img } = await getPlaiceholder(imageUrl,  { size: 10 });
 
       updatedImages.push({
      
