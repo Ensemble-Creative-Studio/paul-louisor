@@ -82,11 +82,11 @@ export default function Page({
 async function getSlideData(slides: any) {
   let updatedSlides = [];
 
-  const slidePromises = slides.map(async slide => {
+  const slidePromises = slides.map(async (slide: { _ref: any; }) => {
     const querySlide = groq`*[_id == '${slide._ref}']`;
     const slideData = await client.fetch(querySlide);
 
-    const imagePromises = slideData[0].images.map(async image => {
+    const imagePromises = slideData[0].images.map(async (image: { asset: any; }) => {
       const imageUrl = urlFor(image.asset).url();
       const { base64, img } = await getPlaiceholder(imageUrl,  { size: 4 });
 
