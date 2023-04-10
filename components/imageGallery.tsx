@@ -44,7 +44,7 @@ const ImageGallery = ({ slides, series, seriesOnly }: ImageGalleryProps) => {
   useEffect(() => {
     setTimeout(() => {
       setIsImageVisible(true);
-    }, 1000);
+    }, 1500);
     AOS.init();
 
     const bgWhite = document.querySelector(
