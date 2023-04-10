@@ -364,12 +364,10 @@ nav li {
 
 [data-aos="scaleY"] {
   opacity: 0;
-  display: none;
   transform: translateY(100px) scaleY(1.3);
   transition-property: all;
 
   &.aos-animate {
-    display: block;
     opacity: 1;
     transform: translateY(0px) scaleY(1);
   }
