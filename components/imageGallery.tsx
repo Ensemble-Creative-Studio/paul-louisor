@@ -3,7 +3,7 @@ import urlFor from "@/lib/urlFor";
 import { toggleScaleUpClass } from "./utils/toggleScaleUpClass";
 import { drag } from "./utils/drag";
 import { revealSkew } from "./utils/revealSkew";
-import { Key, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import $ from "jquery";
@@ -22,8 +22,6 @@ interface Serie {
   _id: string;
   title: string;
   images: {
-    img: any;
-    base64: string | undefined;
     asset: any;
     ImageMobile: {
       asset: {
@@ -36,15 +34,10 @@ interface Serie {
 interface ImageGalleryProps {
   slides: Slide[];
   series: Serie[];
-  seriesOnly: any
 }
 
-const ImageGallery = ({ slides, series, seriesOnly }: ImageGalleryProps) => {
-  const [isImageVisible, setIsImageVisible] = useState(false);
+const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
   useEffect(() => {
-    setTimeout(() => {
-      setIsImageVisible(true);
-    }, 1500);
     AOS.init();
 
     const bgWhite = document.querySelector(
@@ -200,7 +193,6 @@ $(".galleryImage").on("mouseup", "img", function (event) {
     <div className="   md:pt-72 grid pt-40 ">
       {slides.map((slide, indexSlide) => {
         const matchingSerie = series.find((serie) => serie._id === slide._ref);
-
         if (matchingSerie) {
           return (
             <div
@@ -220,34 +212,22 @@ $(".galleryImage").on("mouseup", "img", function (event) {
                 key={indexSlide}
               >
                 <div className="md:pb-6 flex cursor-grab flex-nowrap h-full overflow-x-auto gap-2 hideScrollBar pb-4 galleryOrigin transitionScaleUp imageContainer passive ">
-                  {seriesOnly[indexSlide].images.map((image: {
-                    img: any; asset: any; 
-}, index: number) => {
-      // console.log(image)
-             
- 
-      if (isImageVisible || indexSlide < 2) {
-        return (
-          <Image
-            key={index}
-            className={`flex-shrink-0 w-auto h-full ${
-              index === 0 ? "md:DesktopMarginleft ml-8" : ""
-            }`}
-            src={image.img.src} 
-            width={1200}
-            height={1800}
-            quality={85}
-            priority={indexSlide < 2}
-            draggable={false}
-            blurDataURL={indexSlide > 1 ? image.img.blurDataURL : undefined} // Use the base64 URL from the matchingSeries objects only if indexSlide > 2
-            placeholder={indexSlide > 1 ? "blur" : undefined}
-            alt="gallery image"
-          />
-        );
-      } else {
-        return null;
-      }
-      
+                  {matchingSerie.images.map((image, index) => {
+                    return (
+                      <Image
+                        key={index}
+                        className={`flex-shrink-0 w-auto h-full  ${
+                          index === 0 ? "md:DesktopPaddingleft pl-8" : ""
+                        }`}
+                        src={urlFor(image.asset).url()}
+                        width={1200}
+                        height={1800}
+                        quality={85}
+                        
+                        draggable={false}
+                        alt="gallery image"
+                      />
+                    );
                   })}
                 </div>
                 <div className="md:flex md:pl-0 md:DesktopPaddingleft pl-8 title transitionScaleUp titleOrigin">

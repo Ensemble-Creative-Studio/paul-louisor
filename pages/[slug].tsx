@@ -8,21 +8,16 @@ import { useRouter } from "next/router";
 import ImageGallery from "@/components/imageGallery";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import urlFor from "@/lib/urlFor";
-
-import { getPlaiceholder } from "plaiceholder";
 interface PageProps {}
 
 export default function Page({
   header,
   menu,
   page,
-  seriesOnly
 }: {
   header: any;
   menu: any;
   page: any;
-  seriesOnly: any
 }) {
   
   const router = useRouter();
@@ -56,7 +51,6 @@ export default function Page({
     const nextPageUrl = `/${nextPageSlug}`;
     setMatchingSlides(matchingSlides);
     setMatchingSeries(matchingSeries);
-
     setNextPageUrl(nextPageUrl);
     setNextPageSlug(nextPageSlug);
   }, []);
@@ -67,7 +61,7 @@ export default function Page({
         <meta property="og:title" content="Paul Louisor" key="title" />
         {/* <meta property="og:description" content={header.description} key="title" /> */}
       </Head>
-      <ImageGallery slides={matchingSlides} series={matchingSeries} seriesOnly={seriesOnly} />
+      <ImageGallery slides={matchingSlides} series={matchingSeries} />
       <div className="block lastSpacing transitionScaleUp h-0"></div>
       <Link
         scroll={false}
@@ -79,52 +73,15 @@ export default function Page({
     </div>
   );
 }
-async function getSlideData(slides: any) {
-  const updatedSlides = [];
-
-  // Loop through each slide and fetch its data using _ref
-  for (let slide of slides) {
-    const querySlide = groq`*[_id == '${slide._ref}']`;
-    const slideData = await client.fetch(querySlide);
-
-    // Update the images array of the slide with blur placeholders
-    const updatedImages = [];
-    for (const image of slideData[0].images) {
-      const imageUrl = urlFor(image.asset).url();
-      const { base64, img } = await getPlaiceholder(imageUrl,  { size: 10 });
-
-      updatedImages.push({
-     
-        img: {
-          ...img,
-          blurDataURL: base64,
-        },
-      });
-    }
-    slideData[0].images = updatedImages;
-
-    updatedSlides.push(slideData[0]);
-  }
-
-  return updatedSlides;
-}
 
 export const getStaticProps = async (context: { params: { slug: any } }) => {
   const { slug } = context.params;
-
   const query = groq`*[_type == 'siteSettings' ] `;
   const data = await client.fetch(query);
-  const queryMenu = groq`*[_type == 'pages']|order(orderRank) `;
+  const queryMenu = groq`*[_type == 'pages' ]|order(orderRank) `;
   const dataMenu = await client.fetch(queryMenu);
-
-  const thispageSeries =  groq`*[_type == 'pages' && slug.current ==  "${slug}" ] `;
-  const datathispageSeries = await client.fetch(thispageSeries);
-  const queryPage = groq`*[_type == 'series' ]`;
+  const queryPage = groq`*[_type == 'series']`;
   const dataPage = await client.fetch(queryPage);
-
-
-  const updatedSlides = await getSlideData(datathispageSeries[0].slides);
-  const seriesOnly = updatedSlides;
 
   if (data && data.length > 0) {
     return {
@@ -132,13 +89,11 @@ export const getStaticProps = async (context: { params: { slug: any } }) => {
         header: data[0],
         menu: dataMenu,
         page: dataPage,
-        seriesOnly: seriesOnly, // change this line
-            },
+      },
     };
   }
   return { props: { header: null, dataMenu: null } };
 };
-
 export async function getStaticPaths() {
   const query = groq`*[_type == 'pages'  ]`;
   const data = await client.fetch(query);

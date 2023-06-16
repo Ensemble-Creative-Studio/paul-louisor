@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
-const { withPlaiceholder } = require("@plaiceholder/next");
-module.exports =  withPlaiceholder({
+module.exports = {
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [
@@ -19,5 +18,5 @@ module.exports =  withPlaiceholder({
     appDir: true 
   },
 
-  staticPageGenerationTimeout: 1000,
-});
+  
+};
