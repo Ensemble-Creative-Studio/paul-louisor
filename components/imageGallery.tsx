@@ -232,7 +232,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
        {displayedSlides < slides.length && (
       <button
         onClick={() => setDisplayedSlides(displayedSlides + 3)}
-        className="loadMoreButton"
+        className="loadMoreButton p-40"
       >
         Load More
       </button>
