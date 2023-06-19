@@ -68,7 +68,9 @@ export default function Page({
         <meta property="og:title" content="Paul Louisor" key="title" />
         {/* <meta property="og:description" content={header.description} key="title" /> */}
       </Head>
-      <ImageGallery slides={matchingSlides} series={matchingSeries} />
+      {matchingSlides && (
+  <ImageGallery slides={matchingSlides} series={matchingSeries} />
+)}
       <div className="block lastSpacing transitionScaleUp h-0"></div>
       <Link
         scroll={false}
