@@ -68,7 +68,7 @@ export default function Page({
         <meta property="og:title" content="Paul Louisor" key="title" />
         {/* <meta property="og:description" content={header.description} key="title" /> */}
       </Head>
-      <HeaderNav header={header} menu={menu} />
+      {/* <HeaderNav header={header} menu={menu} /> */}
       {matchingSlides && (
   <ImageGallery slides={matchingSlides} series={matchingSeries} />
 )}
