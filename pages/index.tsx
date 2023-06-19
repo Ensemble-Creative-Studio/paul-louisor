@@ -42,7 +42,7 @@ export default function HomePage({ header, menu, page }: { header: any; menu: an
         <title>Paul Louisor </title>
         <meta property="og:title" content="Paul Louisor" key="title" />
 
-        {/* {page.map((serie: { slides: any[]; }) =>
+        {page.map((serie: { slides: any[]; }) =>
     serie.slides.slice(0, 2).map((slide: { images: any[]; }) =>
       slide.images.map((image: { asset: any; }, index: Key | null | undefined) => (
         <link
@@ -53,7 +53,7 @@ export default function HomePage({ header, menu, page }: { header: any; menu: an
         />
       ))
     )
-  )} */}
+  )}
 
         {/* <meta property="og:description" content={header.description} key="title" /> */}
       </Head>
@@ -74,7 +74,7 @@ export async function getStaticProps() {
   // Modify the series query to limit the results to 2 series, including all images
   const queryPage = groq`*[_type == 'pages'][0...3]{..., "slides": slides[]->{..., "images": images}}`;
     const dataPage = await client.fetch(queryPage);
-console.log(dataPage)
+
   if (data && data.length > 0) {
     return {
       props: {
