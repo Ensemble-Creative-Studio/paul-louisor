@@ -106,7 +106,7 @@ export const getStaticProps = async (context: { params: { slug: any } }) => {
   const querySeries = groq`*[_type == 'series' && _id in $seriesIds]`;
   const paramsSeries = { seriesIds: matchingSeriesIds };
   const matchingSeries = await client.fetch(querySeries, paramsSeries);
-console.log(matchingSlides)
+
   if (data && data.length > 0) {
     return {
       props: {

@@ -74,7 +74,7 @@ export default function HomePage({ header, menu, page }: { header: any; menu: an
       ))
     )
   )}
-  {console.log(page.serie)}
+
 </div>
     </div>
   );
@@ -90,7 +90,7 @@ export async function getStaticProps() {
   // Modify the series query to limit the results to 2 series, including all images
   const queryPage = groq`*[_type == 'pages'][0...3]{..., "slides": slides[]->{..., "images": images}}`;
     const dataPage = await client.fetch(queryPage);
-console.log(dataPage)
+
   if (data && data.length > 0) {
     return {
       props: {

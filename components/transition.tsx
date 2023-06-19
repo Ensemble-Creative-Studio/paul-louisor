@@ -18,10 +18,10 @@ const Transition = ({ children }: any) => {
   // Listen to route change events
   useEffect(() => {
     const allNav = document.querySelectorAll('nav a') as any;
-    console.log(allNav)
+
     allNav.forEach((navItem: any) => {
       navItem.addEventListener('click', () => {
-        console.log('coucou')
+
         setInitialY('100vh');
         setInitialY2('-100vh');
       });
@@ -44,7 +44,7 @@ const Transition = ({ children }: any) => {
         // }, 1500);
       });
       siteHome.addEventListener('click', () => {
-        console.log('cli')
+
         setInitialY('-100vh');
         setInitialY2('100vh');
 
@@ -56,12 +56,11 @@ const Transition = ({ children }: any) => {
         setInitialY2('100vh');
 
         
-        console.log('Transitioning from home page to another page');
+
       } else if (prevPageUrl !== '/' && url === '/') {
         setInitialY('100vh');
         setInitialY2('-100vh');
     
-        console.log('Transitioning from another page to home page');
       }
        else if (prevPageUrl !== '/' && url !== '/') {
         setInitialY('-100vh');

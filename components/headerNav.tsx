@@ -9,9 +9,9 @@ interface HeaderProps {
 }
 
 export default function HeaderNav({ header, menu }: { header: any; menu: any }) {
-  // useEffect(() => {
-  //   hoverImage();
-  // }, []);
+  useEffect(() => {
+    hoverImage();
+  }, []);
   const router = useRouter();
   const handleContactClick = () => {
     if (window.innerWidth < 765) {

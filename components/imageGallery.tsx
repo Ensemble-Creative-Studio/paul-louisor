@@ -1,13 +1,13 @@
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import urlFor from "@/lib/urlFor";
 import { toggleScaleUpClass } from "./utils/toggleScaleUpClass";
 import { drag } from "./utils/drag";
 import { revealSkew } from "./utils/revealSkew";
-import { useEffect, useState } from "react";
+import chevron from '../public/chevron.svg'
 import "aos/dist/aos.css";
 import AOS from "aos";
 import $ from "jquery";
-
 import Link from "next/link";
 
 interface Slide {
@@ -39,9 +39,15 @@ interface ImageGalleryProps {
 
 const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
   const [displayedSlides, setDisplayedSlides] = useState(3);
-
-  useEffect(() => {
+  const galleryContainerRef = useRef(null);
+  const loadMoreRef = useRef<HTMLButtonElement | null>(null);
+  useEffect(() => { 
     AOS.init();
+    
+
+   }, []);
+  useEffect(() => {
+  
 
     const bgWhite = document.querySelector(
       ".galleryContainer.new"
@@ -55,6 +61,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
 
     setTimeout(() => {
       const galleryImages = document.querySelectorAll(".imageContainer");
+
       let dragging = false;
 
       $(".galleryImage").on("mousedown", "img", function () {
@@ -65,12 +72,11 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
         dragging = true;
       });
 
-      $(".galleryImage").on("mouseup", "img", function (event) {
+      $(".galleryImage").off("mouseup", "img").on("mouseup", "img", function (event) {
         if (!dragging) {
           // Only run the code if the user is not dragging the container
           const container = $(this).parent(".imageContainer");
           const galleryImage = container.parents(".galleryImage");
-
           const isMaxRow = galleryImage.hasClass("max-row");
           if (isMaxRow) {
             setTimeout(() => {
@@ -107,7 +113,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
                 },
                 "slow"
               );
-
+      
               const rect = event.target.getBoundingClientRect();
               const bgWhite = document.querySelector(
                 ".galleryContainer"
@@ -124,6 +130,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
           }
         }
       });
+      
 
       return () => {
         bgWhite.removeEventListener("scroll", handleScroll);
@@ -135,17 +142,21 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
         });
       };
     }, 500);
-  }, []);
+  }
+  
+  
+  
+  , [displayedSlides]);
 
   const Drag = () => {
     drag();
   };
 
-  const [isMaxRow, setIsMaxRow] = useState(false);
+  const [isMaxRow, setIsMaxRow] = useState<boolean[]>([]);
   const [clickedIndex, setClickedIndex] = useState(-1);
 
   const handleMaxRowToggle = (event: any, index: any) => {
-    // Check if clicked element has class 'passive'
+    const newIsMaxRow = [...isMaxRow];
     let drag = false;
 
     document.addEventListener("mousedown", () => (drag = false));
@@ -154,11 +165,12 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
 
     if (event.target.classList.contains("passive")) {
       if (clickedIndex === index && drag === false) {
-        setIsMaxRow(!isMaxRow);
+        newIsMaxRow[index] = !newIsMaxRow[index];
       } else {
         setClickedIndex(index);
-        setIsMaxRow(true);
+        newIsMaxRow[index] = true;
       }
+      setIsMaxRow(newIsMaxRow);
       setTimeout(() => {
         const rect = event.target.getBoundingClientRect();
         const bgWhite = document.querySelector(".galleryContainer") as HTMLElement;
@@ -173,70 +185,107 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
     }
   };
 
-  return (
-    <div className="   md:pt-72 grid pt-40 ">
-      {slides?.slice(0, displayedSlides).map((slide, indexSlide) => {
+  const handleLoadMore = () => {
+    setDisplayedSlides(displayedSlides + 3);
+    // const container = galleryContainerRef.current;
+    // if (container) {
+    //   container.scrollTop = container.scrollHeight; // Scroll to the bottom after loading more slides
+    // }
+  };
 
-        const matchingSerie = series.find((serie) => serie._id === slide._ref);
-        if (matchingSerie) {
-          return (
-            <div
-              className={`customRowspan  galleryImage new animatedScale relative grid transitionScaleUp z-10 ${
-                clickedIndex === indexSlide && isMaxRow ? "max-row" : "min-row"
-              } galleryOrigin`}
-              onMouseEnter={Drag}
-              onClick={(event) => handleMaxRowToggle(event, indexSlide)}
-              key={indexSlide}
-            >
+  useEffect(() => {
+    const initialIsMaxRow = Array(displayedSlides).fill(false);
+    setIsMaxRow(initialIsMaxRow);
+  }, [displayedSlides]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        const first = entries[0];
+        if (first.isIntersecting) {
+          // Visible, load more
+          setTimeout(() => {
+            handleLoadMore();
+          }, 500);
+        }
+      },
+      { threshold: 1.0 } // Trigger when the button is fully visible
+    );
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+    return () => {
+      observer.disconnect();
+    };
+  }, [displayedSlides]); // Rerun when displayedSlides changes
+
+  
+
+  return (
+    <div className="md:pt-72 grid pt-40">
+      <div className="galleryContainer new" ref={galleryContainerRef}>
+        {slides?.slice(0, displayedSlides).map((slide, indexSlide) => {
+          const matchingSerie = series.find((serie) => serie._id === slide._ref);
+          if (matchingSerie) {
+            return (
               <div
-                data-aos="scaleY"
-                data-aos-id="super-duper"
-                data-aos-once="true"
-                className="customRowspanSmall transitionScaleUp "
+                className={`customRowspan  galleryImage new animatedScale relative grid transitionScaleUp z-10 ${
+                  clickedIndex === indexSlide && isMaxRow[indexSlide] ? "max-row" : "min-row"
+                } galleryOrigin`}
+                onMouseEnter={Drag}
+                onClick={(event) => handleMaxRowToggle(event, indexSlide)}
                 key={indexSlide}
               >
-                <div className="md:pb-6 flex cursor-grab flex-nowrap h-full overflow-x-auto gap-2 hideScrollBar pb-4 galleryOrigin transitionScaleUp imageContainer passive ">
-                  {matchingSerie.images.map((image, index) => {
-                    return (
-                      <Image
-                        key={index}
-                        className={`flex-shrink-0 w-auto h-full  ${
-                          index === 0 ? "md:DesktopPaddingleft pl-8" : ""
-                        }`}
-                        src={urlFor(image.asset).url()}
-                        width={1200}
-                        height={1800}
-                        quality={85}
-                        priority={true}
-                        draggable={false}
-                        alt="gallery image"
-                      />
-                    );
-                  })}
+                <div
+                  data-aos="scaleY"
+                  data-aos-id="super-duper"
+                  data-aos-once="true"
+                  className="customRowspanSmall transitionScaleUp "
+                  key={indexSlide}
+                >
+                  <div className="md:pb-6 flex cursor-grab flex-nowrap h-full overflow-x-auto gap-2 hideScrollBar pb-4 galleryOrigin transitionScaleUp imageContainer passive ">
+                    {matchingSerie.images.map((image, index) => {
+                      return (
+                        <Image
+                          key={index}
+                          className={`flex-shrink-0 w-auto h-full  ${
+                            index === 0 ? "md:DesktopPaddingleft pl-8" : ""
+                          }`}
+                          src={urlFor(image.asset).url()}
+                          width={1200}
+                          height={1800}
+                          quality={85}
+                          priority={true}
+                          draggable={false}
+                          alt="gallery image"
+                        />
+                      );
+                    })}
+                  </div>
+                  <div className="md:flex md:pl-0 md:DesktopPaddingleft pl-8 title transitionScaleUp titleOrigin">
+                    <h4 className="fontSize">{matchingSerie.title}</h4>
+                    <h4 className="md:pl-4 fontSize">{matchingSerie.date}</h4>
+                  </div>
                 </div>
-                <div className="md:flex md:pl-0 md:DesktopPaddingleft pl-8 title transitionScaleUp titleOrigin">
-                  <h4 className="fontSize">{matchingSerie.title}</h4>
-                  <h4 className="md:pl-4 fontSize">{matchingSerie.date}</h4>
-                </div>
+                <div className="spaccer row-span-2"></div>
               </div>
-              <div className="spaccer row-span-2"></div>
-              
-            </div>
-            
-          );
-        } else {
-          return <div key={indexSlide}></div>;
-        }
-        
-      })}
-       {displayedSlides < slides.length && (
-      <button
-        onClick={() => setDisplayedSlides(displayedSlides + 3)}
-        className="loadMoreButton p-40"
-      >
-        Load More
-      </button>
-        )}
+            );
+          } else {
+            return <div key={indexSlide}></div>;
+          }
+        })}
+      </div>
+      {displayedSlides < slides.length && (
+  <button ref={loadMoreRef} className="loadMoreButton p-40">
+  <div className="flex flex-col justify-center">
+    <div className="flex flex-col items-center">
+      <div>Load More</div>
+      <Image src="/chevron.svg" alt="me" width="12" height="12" />
+    </div>
+  </div>
+</button>
+
+      )}
     </div>
   );
 };
