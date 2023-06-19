@@ -173,7 +173,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
 
   return (
     <div className="   md:pt-72 grid pt-40 ">
-      {slides.map((slide, indexSlide) => {
+      {slides?.map((slide, indexSlide) => {
 
         const matchingSerie = series.find((serie) => serie._id === slide._ref);
         if (matchingSerie) {
