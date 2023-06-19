@@ -32,7 +32,6 @@ export default function Page({
   const [nextPageSlug, setNextPageSlug] = useState("");
   const CapitaliseSlug = (slug as string).charAt(0).toUpperCase() + slug.slice(1);
 
-
     useEffect(() => {
       const bgWhite2 = document.querySelector(".galleryContainer.new") as HTMLElement;
 
@@ -86,23 +85,23 @@ export const getStaticProps = async (context: { params: { slug: any } }) => {
   const { slug } = context.params;
   const query = groq`*[_type == 'siteSettings' ] `;
   const data = await client.fetch(query);
-  const queryMenu = groq`*[_type == 'pages' ] { ..., slides[0...3] } | order(orderRank) `;
+  const queryMenu = groq`*[_type == 'pages' ] { ..., slides } | order(orderRank) `;
   const dataMenu = await client.fetch(queryMenu);
-  const queryPage = groq`*[_type == 'pages' && slug.current == $slug]{ ..., slides[0...3] }`;
+  const queryPage = groq`*[_type == 'pages' && slug.current == $slug]{ ..., slides }`;
   const paramsPage = { slug: slug };
   const dataPage = await client.fetch(queryPage, paramsPage);
 
   // Find the matching slides and series
   const matchingSlides = slug === '/' ? [] : dataPage[0].slides ?? [];
   const matchingSeriesIds = matchingSlides
-    .slice(0, 3) // Get the first three slides
+    // Get the first three slides
     .map((slide: { _ref: any; }) => slide._ref); // Extract the _ref values of the slides
 
   // Fetch the corresponding series based on the _ref values
   const querySeries = groq`*[_type == 'series' && _id in $seriesIds]`;
   const paramsSeries = { seriesIds: matchingSeriesIds };
   const matchingSeries = await client.fetch(querySeries, paramsSeries);
-
+console.log(matchingSlides)
   if (data && data.length > 0) {
     return {
       props: {

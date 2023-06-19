@@ -38,6 +38,8 @@ interface ImageGalleryProps {
 }
 
 const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
+  const [displayedSlides, setDisplayedSlides] = useState(3);
+
   useEffect(() => {
     AOS.init();
 
@@ -173,7 +175,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
 
   return (
     <div className="   md:pt-72 grid pt-40 ">
-      {slides?.map((slide, indexSlide) => {
+      {slides?.slice(0, displayedSlides).map((slide, indexSlide) => {
 
         const matchingSerie = series.find((serie) => serie._id === slide._ref);
         if (matchingSerie) {
@@ -218,12 +220,23 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
                 </div>
               </div>
               <div className="spaccer row-span-2"></div>
+              
             </div>
+            
           );
         } else {
           return <div key={indexSlide}></div>;
         }
+        
       })}
+       {displayedSlides < slides.length && (
+      <button
+        onClick={() => setDisplayedSlides(displayedSlides + 3)}
+        className="loadMoreButton"
+      >
+        Load More
+      </button>
+        )}
     </div>
   );
 };
