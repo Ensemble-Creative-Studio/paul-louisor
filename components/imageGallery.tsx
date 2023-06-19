@@ -191,7 +191,7 @@ $(".galleryImage").on("mouseup", "img", function (event) {
 
   return (
     <div className="   md:pt-72 grid pt-40 ">
-  {slides.slice(0, 6).map((slide, indexSlide) => {
+  {slides.slice(0, 3).map((slide, indexSlide) => {
   const matchingSerie = series.find((serie) => serie._id === slide._ref);
   if (matchingSerie) {
     return (
