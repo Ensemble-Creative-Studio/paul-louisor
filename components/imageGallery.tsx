@@ -186,12 +186,20 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
   };
 
   const handleLoadMore = () => {
-    setDisplayedSlides(displayedSlides + 3);
-    // const container = galleryContainerRef.current;
-    // if (container) {
-    //   container.scrollTop = container.scrollHeight; // Scroll to the bottom after loading more slides
-    // }
+    const remainingSlides = slides.length - displayedSlides;
+    let additionalSlides = 3;
+  
+    if (remainingSlides === 1) {
+      additionalSlides = 1;
+    } else if (remainingSlides === 2) {
+      additionalSlides = 2;
+    } else if (remainingSlides < 1) {
+      return; // No more slides available, return early
+    }
+  
+    setDisplayedSlides(displayedSlides + additionalSlides);
   };
+  
 
   useEffect(() => {
     const initialIsMaxRow = Array(displayedSlides).fill(false);
@@ -206,7 +214,7 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
           // Visible, load more
           setTimeout(() => {
             handleLoadMore();
-          }, 500);
+          }, 1000);
         }
       },
       { threshold: 1.0 } // Trigger when the button is fully visible
@@ -291,3 +299,4 @@ const ImageGallery = ({ slides, series }: ImageGalleryProps) => {
 };
 
 export default ImageGallery;
+
