@@ -19,6 +19,12 @@ export default function ImageHeader({ menu }: { menu: any }) {
       const pageName = item.pageName.toLowerCase();
       return { url: urlFor(item.ImageDesktop!.asset!._ref).url(), pageName };
     });
+  const desktopImageUrls2 = menu
+    .filter((item: any) => item.ImageDesktop2 && item.ImageDesktop2.asset)
+    .map((item: any) => {
+      const pageName = item.pageName.toLowerCase();
+      return { url2: urlFor(item.ImageDesktop2!.asset!._ref).url(), pageName };
+    });
   return (
     <div className=" imageHeaderCol self-end transitionEasingContact">
       <div className=" md:hidden flex gallery-header-mobile">
@@ -42,6 +48,19 @@ export default function ImageHeader({ menu }: { menu: any }) {
               <Image
                 className="h-full"
                 src={item.url}
+                width={1800}
+                height={1200}
+                alt="menu item desktop image"
+              />
+            </Link>
+          </div>
+        ))}
+        {desktopImageUrls2.map((item: any, index: any) => (
+          <div className="md:flex-1" key={index}>
+            <Link href={item.pageName}>
+              <Image
+                className="h-full"
+                src={item.url2}
                 width={1800}
                 height={1200}
                 alt="menu item desktop image"

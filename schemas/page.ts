@@ -29,6 +29,12 @@ export default {
         type: 'image',
       },
       {
+        name: 'ImageDesktop2',
+        description: 'Here you can select the second image displayed on the home for the desktop',
+        title: 'Image Dektop 2',
+        type: 'image',
+      },
+      {
         name: 'ImageMobile',
         description: 'Here you can select the image displayed on the home for the mobile',
         title: 'Image Mobile',
