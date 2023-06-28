@@ -94,7 +94,7 @@ else{
       delay: 0.4,
       ease:'Power4.easeInOut',
     });
-    gsap.fromTo(imageHeaderColMobile, {
+    gsap.fromTo(imageHeaderCol, {
         y: 100,
         autoAlpha: 0,
       }, {

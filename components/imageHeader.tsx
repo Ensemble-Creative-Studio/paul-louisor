@@ -27,7 +27,7 @@ export default function ImageHeader({ header }: { header: any }) {
   //   });
   return (
     <div className=" imageHeaderCol self-end transitionEasingContact">
-      <div className=" flex gallery-header-mobile md:[&>*:nth-child(3)]:block [&>*:nth-child(3)]:hidden  md:[&>*:nth-child(4)]:block [&>*:nth-child(4)]:hidden  md:[&>*:nth-child(5)]:block [&>*:nth-child(5)]:hidden">
+      <div className=" flex gallery-header md:[&>*:nth-child(3)]:block [&>*:nth-child(3)]:hidden  md:[&>*:nth-child(4)]:block [&>*:nth-child(4)]:hidden  md:[&>*:nth-child(5)]:block [&>*:nth-child(5)]:hidden">
         {header.images.map((url: any, index: Key | null | undefined) => (
           <div key={index} className="w-full  ">
             <Image

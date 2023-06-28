@@ -29,7 +29,7 @@ export default function HeaderNavMobile({ header, menu }: { header: any; menu: a
 
 
    
-        <nav className="md:pt-6 md:w-screen fontSize  slug  z-20 md:grid md:grid-cols-12 md:gap-4 md:px-4  block pt-32  pl-8">
+        <nav className="md:pt-6 md:w-screen md:fontSize fontSizeSlug  slug  z-20 md:grid md:grid-cols-12 md:gap-4 md:px-4  block pt-32  pl-8">
           <ul className="col-start-4 menuTitle galleryOrigin relative">
             {menu.map((item: any, index: any) => (
               <li className="" key={index}>

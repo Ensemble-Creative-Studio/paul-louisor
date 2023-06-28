@@ -147,8 +147,16 @@ body {
   .minusTop {
     top: 0;
   }
+  .fontSizeSlug{
+    font-size: 1.6rem;
+    line-height: 140%;
+  }
   @media screen and (min-width: 768px) {
     nav.fontSize {
+      font-size: 1.8rem;
+      line-height: 1.8rem;
+    }
+    .fontSizeSlug{
       font-size: 1.8rem;
       line-height: 1.8rem;
     }
