@@ -38,10 +38,6 @@ body {
   font-size: 1.6rem;
   line-height: 100%;
 }
-.fontSize.slug {
-  font-size: 1.6rem;
-  line-height: 140%;
-}
 @layer utilities {
   .h-svh {
     height: calc(100svh);
@@ -139,7 +135,7 @@ body {
   .titleOrigin {
     transform-origin: 20px -5px;
   }
-  nav.homeNav.fontSize {
+  nav.fontSize {
     font-size: 3.6rem;
     line-height: 3.6rem;
   }
