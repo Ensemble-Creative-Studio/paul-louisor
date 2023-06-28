@@ -28,7 +28,23 @@ export default {
          type: 'blockContent'
          
       },
+      {
+        name: 'images',
+        title: 'Images',
+        type: 'array',
+        description:'The first 2 images will be the ones on the mobile version',
+        validation: (Rule: { required: () => { (): any; new(): any; min: { (arg0: number): { (): any; new(): any; max: { (arg0: number): any; new(): any; }; }; new(): any; }; }; }) => Rule.required().min(3).max(5),
 
+        of: [
+          {
+            type: 'image',
+            
+            options: {
+              hotspot: true
+            }
+          }
+        ]
+      },
       {
         name: 'SiteBy',
         title: 'Site by',

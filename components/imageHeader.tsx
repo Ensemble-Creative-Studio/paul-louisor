@@ -8,40 +8,40 @@ interface HeaderProps {
   navigation: string[];
 }
 
-export default function ImageHeader({ menu }: { menu: any }) {
-  const mobileImageUrls = menu
-    .filter((item: any) => item.ImageMobile && item.ImageMobile.asset)
-    .map((item: any) => urlFor(item.ImageMobile!.asset!._ref).url());
+export default function ImageHeader({ header }: { header: any }) {
+  // const mobileImageUrls = menu
+  //   .filter((item: any) => item.ImageMobile && item.ImageMobile.asset)
+  //   .map((item: any) => urlFor(item.ImageMobile!.asset!._ref).url());
 
-  const desktopImageUrls = menu
-    .filter((item: any) => item.ImageDesktop && item.ImageDesktop.asset)
-    .map((item: any) => {
-      const pageName = item.pageName.toLowerCase();
-      return { url: urlFor(item.ImageDesktop!.asset!._ref).url(), pageName };
-    });
-  const desktopImageUrls2 = menu
-    .filter((item: any) => item.ImageDesktop2 && item.ImageDesktop2.asset)
-    .map((item: any) => {
-      const pageName = item.pageName.toLowerCase();
-      return { url2: urlFor(item.ImageDesktop2!.asset!._ref).url(), pageName };
-    });
+  // const desktopImageUrls = menu
+  //   .filter((item: any) => item.ImageDesktop && item.ImageDesktop.asset)
+  //   .map((item: any) => {
+  //     const pageName = item.pageName.toLowerCase();
+  //     return { url: urlFor(item.ImageDesktop!.asset!._ref).url(), pageName };
+  //   });
+  // const desktopImageUrls2 = menu
+  //   .filter((item: any) => item.ImageDesktop2 && item.ImageDesktop2.asset)
+  //   .map((item: any) => {
+  //     const pageName = item.pageName.toLowerCase();
+  //     return { url2: urlFor(item.ImageDesktop2!.asset!._ref).url(), pageName };
+  //   });
   return (
     <div className=" imageHeaderCol self-end transitionEasingContact">
-      <div className=" md:hidden flex gallery-header-mobile">
-        {mobileImageUrls.map((url: any, index: Key | null | undefined) => (
-          <div key={index}>
+      <div className=" flex gallery-header-mobile md:[&>*:nth-child(3)]:block [&>*:nth-child(3)]:hidden  md:[&>*:nth-child(4)]:block [&>*:nth-child(4)]:hidden  md:[&>*:nth-child(5)]:block [&>*:nth-child(5)]:hidden">
+        {header.images.map((url: any, index: Key | null | undefined) => (
+          <div key={index} className="w-full  ">
             <Image
-              className="block md:hidden"
-              src={url}
-              width={1200}
-              height={800}
+              className="block w-full h-full object-cover"
+              src={urlFor(url.asset).url()}
+              width={1800}
+              height={1200}
               alt="menu item image"
             />
           </div>
         ))}
       </div>
 
-      <div className=" md:flex hidden gallery-header ">
+      {/* <div className=" md:flex hidden gallery-header ">
         {desktopImageUrls.map((item: any, index: any) => (
           <div className="md:flex-1" key={index}>
             <Link href={item.pageName}>
@@ -68,7 +68,7 @@ export default function ImageHeader({ menu }: { menu: any }) {
             </Link>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

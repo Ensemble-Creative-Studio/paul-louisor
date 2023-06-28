@@ -1,6 +1,7 @@
 import { groq } from "next-sanity";
 import { client } from "../lib/sanity.client";
 import HeaderNav from "@/components/headerNav";
+import HeaderNavMobile from "@/components/headerNavMobile";
 import ImageHeader from "@/components/imageHeader";
 import Contact from "@/components/contact";
 import Head from "next/head";
@@ -69,7 +70,7 @@ export default function Page({
         {/* <meta property="og:description" content={header.description} key="title" /> */}
       </Head>
       {menu && (
-      <HeaderNav header={header} menu={menu} />
+      <HeaderNavMobile header={header} menu={menu} />
       )}
       {matchingSlides && (
   <ImageGallery slides={matchingSlides} series={matchingSeries} />
@@ -77,7 +78,7 @@ export default function Page({
       <div className="block lastSpacing transitionScaleUp h-0"></div>
       <Link
         scroll={false}
-        className="md:DesktopPaddingleft pb-8 nextPage fontSize pl-8 bottom-8 capitalize relative z-20 "
+        className="md:DesktopPaddingleft pb-8 nextPage fontSize pl-8 bottom-8 capitalize relative z-20 opacity-0"
         href={nextPageUrl}
       >
         {nextPageSlug}

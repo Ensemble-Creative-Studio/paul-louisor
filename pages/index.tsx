@@ -48,7 +48,7 @@ export default function HomePage({ header, menu, page }: { header: any; menu: an
         {/* <meta property="og:description" content={header.description} key="title" /> */}
       </Head>
       <HeaderNav header={header} menu={menu} />
-      <ImageHeader menu={menu} />
+      <ImageHeader header={header} />
       <Contact header={header} />
       <div className="hidden">
   

@@ -5,8 +5,8 @@ import {schemaTypes} from './schemas'
 import {media} from 'sanity-plugin-media'
 import {deskStructure} from './schemas/deskstructure'
 import StudioNavbar from './app/(user)/components/StudioNavbar'
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!;
+const projectId = 'kgj2ccaw';
+const dataset = 'production';
 
 export default defineConfig({
   basePath: "/studio",

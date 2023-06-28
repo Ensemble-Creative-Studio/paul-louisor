@@ -38,6 +38,10 @@ body {
   font-size: 1.6rem;
   line-height: 100%;
 }
+.fontSize.slug {
+  font-size: 1.6rem;
+  line-height: 140%;
+}
 @layer utilities {
   .h-svh {
     height: calc(100svh);
@@ -135,7 +139,7 @@ body {
   .titleOrigin {
     transform-origin: 20px -5px;
   }
-  nav.fontSize {
+  nav.homeNav.fontSize {
     font-size: 3.6rem;
     line-height: 3.6rem;
   }
@@ -301,7 +305,7 @@ display: none;
   padding-right: 40vw;
 }
 .min-row {
-  grid-template-rows: 10vh 10vh 10vh 0vh 0vh 0vh 0vh 0vh;
+  grid-template-rows: 10vh 10vh 0vh 0vh 0vh 0vh 0vh 0vh;
   transition: 0.5s cubic-bezier(0.65, 0, 0.35, 1);
   top: 0;
   img {
@@ -318,7 +322,7 @@ display: none;
   }
 }
 .galleryImage {
-  padding-top: 12rem;
+  padding-top: 8rem;
 }
 .galleryImage:nth-child(1) {
   padding-top: 0;
